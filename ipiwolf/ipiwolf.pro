@@ -11,6 +11,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = ipiwolf
 TEMPLATE = app
 
+LIBS += -lfftw3
+
 
 SOURCES += main.cpp\
         mainwindow.cpp
