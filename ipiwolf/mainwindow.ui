@@ -17,6 +17,9 @@
    <iconset>
     <normaloff>images/wolf.png</normaloff>images/wolf.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
@@ -101,13 +104,37 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1" colspan="2">
-           <widget class="QDateTimeEdit" name="dateTimeEdit"/>
-          </item>
           <item row="3" column="1" colspan="2">
-           <widget class="QDateTimeEdit" name="dateTimeEdit_2"/>
+           <widget class="QDateTimeEdit" name="dateTimeEdit_2">
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" colspan="2">
+           <widget class="QDateTimeEdit" name="dateTimeEdit">
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QProgressBar" name="progressBar">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimum">
+           <number>0</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton">
@@ -138,12 +165,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>124</x>
-     <y>172</y>
+     <x>208</x>
+     <y>122</y>
     </hint>
     <hint type="destinationlabel">
-     <x>365</x>
-     <y>170</y>
+     <x>402</x>
+     <y>128</y>
     </hint>
    </hints>
   </connection>
@@ -154,12 +181,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>365</x>
-     <y>156</y>
+     <x>402</x>
+     <y>128</y>
     </hint>
     <hint type="destinationlabel">
-     <x>218</x>
-     <y>165</y>
+     <x>302</x>
+     <y>122</y>
     </hint>
    </hints>
   </connection>

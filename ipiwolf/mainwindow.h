@@ -15,6 +15,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void slotSelectFile();
+
 private:
     Ui::MainWindow *ui;
 };
