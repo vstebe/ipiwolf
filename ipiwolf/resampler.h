@@ -1,7 +1,7 @@
 #ifndef RESAMPLER_H
 #define RESAMPLER_H
-#include "QString";
-#include "QDate";
+#include "QString"
+#include "QDate"
 #include "QFile"
 
 class resampler
@@ -9,7 +9,7 @@ class resampler
 public:
     resampler();
     resampler(QString filename);
-    setFile (QString filename);
+    void setFile (QString filename);
 
 
 };
