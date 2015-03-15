@@ -15,9 +15,15 @@ LIBS += -lfftw3
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp\
+        point.cpp\
+        resampler.cpp\
+        datafile.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h\
+        point.h\
+        resampler.h\
+        datafile.h
 
 FORMS    += mainwindow.ui
 
