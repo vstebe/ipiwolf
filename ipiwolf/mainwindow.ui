@@ -33,7 +33,25 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="txtFile"/>
+        <widget class="QComboBox" name="txtFile">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>/tmp/file</string>
+          </property>
+         </item>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btnOpen">
@@ -138,6 +156,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
            <string>Process</string>
           </property>

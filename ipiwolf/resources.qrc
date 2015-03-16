@@ -2,4 +2,8 @@
     <qresource prefix="/images">
         <file>images/wolf.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>Test.qml</file>
+        <file>TestForm.ui.qml</file>
+    </qresource>
 </RCC>
