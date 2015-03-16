@@ -1,11 +1,11 @@
 #ifndef POINT_H
 #define POINT_H
 
-class point
+class Point
 {
 public:
-    point();
-    point(float x, float y, float z);
+    Point();
+    Point(float x, float y, float z);
     float x;
     float y;
     float z;

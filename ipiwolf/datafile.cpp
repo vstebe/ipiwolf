@@ -1,5 +1,5 @@
 #include "datafile.h"
 
-datafile::datafile()
+DataFile::DataFile()
 {
 }

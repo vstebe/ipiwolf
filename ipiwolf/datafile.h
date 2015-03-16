@@ -1,10 +1,10 @@
 #ifndef DATAFILE_H
 #define DATAFILE_H
 
-class datafile
+class DataFile
 {
 public:
-    datafile();
+    DataFile();
 };
 
 #endif // DATAFILE_H
