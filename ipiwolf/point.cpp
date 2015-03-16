@@ -1,11 +1,11 @@
 #include "point.h"
 
-point::point()
+Point::Point()
 {
 }
 
 
-point::point(float x, float y, float z)
+Point::Point(float x, float y, float z)
 {
     this->x = x;
     this->y = y;
