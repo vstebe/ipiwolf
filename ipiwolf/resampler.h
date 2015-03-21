@@ -4,6 +4,8 @@
 #include "QDate"
 #include "QFile"
 #include "QVector"
+#include "QDate"
+#include "QTextStream"
 #include "datafile.h"
 #include "point.h"
 
@@ -14,13 +16,15 @@ public:
     resampler(QString filename);
     void setFile (QString filename);
     void setFrequency (int freq);
+    void setStartDate(QDate startDate);
+    void setEndDate(QDate endDate);
     DataFile resample();
     QVector<Point> secResample(QVector<Point> lines);
 
 
 private:
-    QDate _dateDebut;
-    QDate _dateFin;
+    QDate _startDate;
+    QDate _endDate;
     QFile _file;
     int _newFrequency;
 

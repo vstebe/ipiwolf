@@ -5,6 +5,8 @@
 */
 resampler::resampler()
 {
+    resampler::setStartDate(QDate);
+    resampler::setEndDate(QDate);
 }
 
 /**
@@ -14,6 +16,8 @@ resampler::resampler()
 resampler::resampler(QString filename)
 {
     resampler::setFile(filename);
+    resampler::setStartDate(QDate);
+    resampler::setEndDate(QDate);
 }
 
 
@@ -28,6 +32,24 @@ void resampler::setFile (QString filename)
         printf("Le fichier n'existe pas !");
 }
 
+/**
+* \brief Set the startDate
+* \param startDate the date you want to set
+*/
+void resampler::setStartDate(QDate startDate)
+{
+    this->_startDate = startDate;
+}
+
+
+/**
+* \brief Set the endDate
+* \param endDate the date you want to set
+*/
+void resampler::setEndDate(QDate endDate)
+{
+    this->_endDate = endDate;
+}
 
 /**
 * \brief Set the frequency of the sample
@@ -52,11 +74,27 @@ DataFile resampler::resample()
     * fin quand date fin est atteinte
     */
 
+
+
     if(!_file.open(QIODevice::ReadOnly))
     {
         printf("Impossible d'ouvrir le fichier !");
         return DataFile();
     }
+
+    QVector<Point> final();
+
+
+    QTextStream in(&_file);
+
+      while (!in.atEnd()) {
+          QString line = in.readLine();
+          QStringList list = str.split("\t");
+          if (QDate::fromString(list[0], "dd'/'MM'/'yyyy") == _startDate)              //detecte la date de debut
+          {
+
+          }
+      }
 }
 
 
