@@ -1,11 +1,11 @@
 #ifndef RESAMPLER_H
 #define RESAMPLER_H
-#include "QString"
-#include "QDate"
-#include "QFile"
-#include "QVector"
-#include "QDate"
-#include "QTextStream"
+#include <QString>
+#include <QDate>
+#include <QFile>
+#include <QVector>
+#include <QDate>
+#include <QTextStream>
 #include "datafile.h"
 #include "point.h"
 

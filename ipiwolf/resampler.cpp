@@ -5,8 +5,8 @@
 */
 resampler::resampler()
 {
-    resampler::setStartDate(QDate);
-    resampler::setEndDate(QDate);
+    setStartDate(QDate::currentDate());
+    setEndDate(QDate::currentDate());
 }
 
 /**
@@ -15,9 +15,9 @@ resampler::resampler()
 */
 resampler::resampler(QString filename)
 {
-    resampler::setFile(filename);
-    resampler::setStartDate(QDate);
-    resampler::setEndDate(QDate);
+    setFile(filename);
+    setStartDate(QDate::currentDate());
+    setEndDate(QDate::currentDate());
 }
 
 
@@ -67,34 +67,40 @@ void resampler::setFrequency (int freq)
 */
 DataFile resampler::resample()
 {
-   /* if date == ok
-    * tant que datefin est pas atteinte :
-    * faire vector point
-    * envoyer vector à resampler et concat avec le vecteur total
-    * fin quand date fin est atteinte
-    */
-
-
-
     if(!_file.open(QIODevice::ReadOnly))
     {
         printf("Impossible d'ouvrir le fichier !");
         return DataFile();
     }
 
-    QVector<Point> final();
-
-
+    DataFile final, temp;
     QTextStream in(&_file);
+    QDate currentDate;
+    QString line = in.readLine();
+    QStringList list = line.split("\t");
 
-      while (!in.atEnd()) {
-          QString line = in.readLine();
-          QStringList list = str.split("\t");
-          if (QDate::fromString(list[0], "dd'/'MM'/'yyyy") == _startDate)              //detecte la date de debut
-          {
+    while (!in.atEnd())
+    {
+        if (list[0]!= "")                                                 //if the list[0] is empty
+            currentDate = QDate::fromString(list[0], "dd'/'MM'/'yyyy");
 
-          }
-      }
+        if ((!currentDate.isNull()) && ( currentDate >= _startDate && currentDate<= _endDate))
+        {
+            temp.push_back( Point(list[4].toFloat(),list[5].toFloat(),list[6].toFloat()));
+            line = in.readLine();
+            list = line.split("\t");
+
+            while (list[0]== "")      //while the currentDate is the same
+            {
+                temp.push_back(Point(list[4].toFloat(),list[5].toFloat(),list[6].toFloat()));
+                line = in.readLine();
+                list = line.split("\t");
+            }
+            final += secResample(temp);
+            temp.clear();
+        }
+    }
+    return final;
 }
 
 
