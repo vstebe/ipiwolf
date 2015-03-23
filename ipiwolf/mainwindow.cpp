@@ -23,5 +23,5 @@ void MainWindow::slotSelectFile()
                                                     "",
                                                     tr("Fichiers textes (*.txt);;Tous les fichiers (*)"));
 
-    ui->txtFile->setText(fileName);
+    ui->txtFile->setEditText(fileName);
 }
