@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,12 +18,16 @@ SOURCES += main.cpp\
         mainwindow.cpp\
         point.cpp\
         resampler.cpp\
-        datafile.cpp
+        datafile.cpp \
+        qcustomplot.cpp \
+    graph.cpp
 
 HEADERS  += mainwindow.h\
         point.h\
         resampler.h\
-        datafile.h
+        datafile.h \
+        qcustomplot.h \
+        graph.h
 
 FORMS    += mainwindow.ui
 

@@ -1,5 +1,5 @@
 #include "resampler.h"
-
+#include <QDebug>
 /**
 * \brief Constructor of the object resampler
 */
@@ -27,7 +27,7 @@ resampler::resampler(QString filename)
 */
 void resampler::setFile (QString filename)
 {
-    QFile _file(filename);
+    _file.setFileName(filename);
     if (!_file.exists())
         printf("Le fichier n'existe pas !");
 }
@@ -65,15 +65,15 @@ void resampler::setFrequency (int freq)
 * \brief Resample the file with the _newFrequency
 * \return a formatted Datafile of the sample, between the two dates given and at the new Frequency
 */
-DataFile resampler::resample()
+DataFile *resampler::resample()
 {
     if(!_file.open(QIODevice::ReadOnly))
     {
         printf("Impossible d'ouvrir le fichier !");
-        return DataFile();
+        return NULL;
     }
 
-    DataFile final;
+    DataFile * final = new DataFile();
     QTextStream in(&_file);
     QDate currentDate;
     QString line = in.readLine();
@@ -96,17 +96,21 @@ DataFile resampler::resample()
             {
                 timeNewPoint += (1.f/(float)_newFrequency);
                 Point a (listPrec[4].toFloat(),listPrec[5].toFloat(),listPrec[6].toFloat());     //first point
-                Point b (listPrec[4].toFloat(),listPrec[5].toFloat(),listPrec[6].toFloat());     //second point
+                Point b (listCou[4].toFloat(),listCou[5].toFloat(),listCou[6].toFloat());     //second point
                 timePa = timePb - timeBetweenPoints;
-
-                final.push_back(calcCoord(a, timePa, b, timePb, timeNewPoint));     //compute the new point
+                std::cout  << "A : " << a << "       B : " << b << std::endl;
+                final->push_back(calcCoord(a, timePa, b, timePb, timeNewPoint));     //compute the new point
             }
         }
 
-        if (listCou[0] != "")       //if the date changes
+        if (!listCou[0].trimmed().isEmpty())       //if the date changes
         {
-            currentDate = QDate::fromString(listCou[0], "dd'/'MM'/'yyyy");
-            timeBetweenPoints = 1.f / listCou[2].toFloat();
+            QDate parsedDate = QDate::fromString(listCou[0], "dd'/'MM'/'yyyy");
+            if(parsedDate.isValid()) {
+                currentDate = parsedDate;
+                qDebug() << "listCou0 : " << listCou[0];
+                timeBetweenPoints = 1.f / listCou[2].toFloat();
+            }
         }
     }
 
@@ -120,8 +124,8 @@ Point resampler::calcCoord(Point a, float timePa, Point b, float timePb, float t
     float coeffDirZ = coeffDirect(a.z, timePa, b.z, timePb);
 
     float OrdOriX = ordOri(coeffDirX, a.x, timePa);
-    float OrdOriY = ordOri(coeffDirX, a.x, timePa);
-    float OrdOriZ = ordOri(coeffDirX, a.x, timePa);
+    float OrdOriY = ordOri(coeffDirY, a.y, timePa);
+    float OrdOriZ = ordOri(coeffDirZ, a.z, timePa);
 
     float CoordX = calcNewPoint(coeffDirX, OrdOriX, timeNewPoint);
     float CoordY = calcNewPoint(coeffDirY, OrdOriY, timeNewPoint);
@@ -132,12 +136,12 @@ Point resampler::calcCoord(Point a, float timePa, Point b, float timePb, float t
 
 float resampler::coeffDirect(float a, float timePa, float b, float timePb)
 {
-    return ((timePb-timePa)/(b-a));
+    return ((b-a)/(timePb-timePa));
 }
 
 float resampler::ordOri(float coeffDir, float a, float timePa)
 {
-    return ((timePa)/(coeffDir*a));
+    return ((a)-(coeffDir*timePa));
 }
 
 float resampler::calcNewPoint(float coeffDir, float OrdOri, float time)
