@@ -73,53 +73,52 @@ DataFile resampler::resample()
         return DataFile();
     }
 
-    DataFile final, temp;
+    DataFile final;
     QTextStream in(&_file);
     QDate currentDate;
     QString line = in.readLine();
-    QStringList list = line.split("\t");
+    QStringList listCou = line.split("\t");
+    QStringList listPrec;
+    float timePb = 0.0, timeNewPoint = 0.0, timePa, timeBetweenPoints;
 
     while (!in.atEnd())
     {
-        if (list[0]!= "")                                                 //if the list[0] is empty
-            currentDate = QDate::fromString(list[0], "dd'/'MM'/'yyyy");
 
-        if ((!currentDate.isNull()) && ( currentDate >= _startDate && currentDate<= _endDate))
+        listPrec = listCou;
+        line = in.readLine();
+        listCou = line.split("\t");
+
+        if ((!currentDate.isNull()) && ( currentDate >= _startDate && currentDate<= _endDate))  //the current date between the two dates
         {
-            temp.push_back( Point(list[4].toFloat(),list[5].toFloat(),list[6].toFloat()));
-            line = in.readLine();
-            list = line.split("\t");
+            timePb += timeBetweenPoints;      //the time of the second point
 
-            while (list[0]== "")      //while the currentDate is the same
+
+            while ((timeNewPoint + (1.f/(float)_newFrequency)) < timePb)
             {
-                temp.push_back(Point(list[4].toFloat(),list[5].toFloat(),list[6].toFloat()));
-                line = in.readLine();
-                list = line.split("\t");
+                timeNewPoint += (1.f/(float)_newFrequency);
+                Point a (listPrec[4].toFloat(),listPrec[5].toFloat(),listPrec[6].toFloat());     //first point
+                Point b (listPrec[4].toFloat(),listPrec[5].toFloat(),listPrec[6].toFloat());     //second point
+                timePa = timePb - timeBetweenPoints;
+
+                final.push_back(calcCoord(a, timePa, b, timePb, timeNewPoint));     //compute the new point
             }
-            final += secResample(temp);
-            temp.clear();
+        }
+
+        if (listCou[0] != "")       //if the date changes
+        {
+            currentDate = QDate::fromString(listCou[0], "dd'/'MM'/'yyyy");
+            timeBetweenPoints = 1.f / listCou[2].toFloat();
         }
     }
+
     return final;
 }
 
+Point resampler::calcCoord(Point a, float timePa, Point b, float timePb, float timeNewPoint)
+{
+    return Point();
+}
 
-/**
-* \brief Resample a part (a second) of the file
-* \param lines the points to resample
-* \return A vector of points
-*/
- QVector<Point> resampler::secResample(QVector<Point> lines)
- {
-
-
-   QVector<Point> vect(55);
-
-
-
-
-
- }
 
 
 

@@ -7,6 +7,7 @@ class DataFile : public QVector<Point>
 {
 public:
     DataFile();
+    DataFile(int size);
 };
 
 #endif // DATAFILE_H

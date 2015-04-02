@@ -19,7 +19,7 @@ public:
     void setStartDate(QDate startDate);
     void setEndDate(QDate endDate);
     DataFile resample();
-    QVector<Point> secResample(QVector<Point> lines);
+    Point calcCoord(Point a, float timePa, Point b, float timePb, float timeNewPoint);
 
 
 private:

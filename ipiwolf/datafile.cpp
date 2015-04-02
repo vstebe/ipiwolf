@@ -3,3 +3,5 @@
 DataFile::DataFile()
 {
 }
+
+DataFile::DataFile(int size) : QVector<Point>(size) {}
