@@ -92,7 +92,6 @@ DataFile resampler::resample()
         {
             timePb += timeBetweenPoints;      //the time of the second point
 
-
             while ((timeNewPoint + (1.f/(float)_newFrequency)) < timePb)
             {
                 timeNewPoint += (1.f/(float)_newFrequency);
@@ -116,10 +115,35 @@ DataFile resampler::resample()
 
 Point resampler::calcCoord(Point a, float timePa, Point b, float timePb, float timeNewPoint)
 {
-    return Point();
+    float coeffDirX = coeffDirect(a.x, timePa, b.x, timePb);        //process the coeff
+    float coeffDirY = coeffDirect(a.y, timePa, b.y, timePb);
+    float coeffDirZ = coeffDirect(a.z, timePa, b.z, timePb);
+
+    float OrdOriX = ordOri(coeffDirX, a.x, timePa);
+    float OrdOriY = ordOri(coeffDirX, a.x, timePa);
+    float OrdOriZ = ordOri(coeffDirX, a.x, timePa);
+
+    float CoordX = calcNewPoint(coeffDirX, OrdOriX, timeNewPoint);
+    float CoordY = calcNewPoint(coeffDirY, OrdOriY, timeNewPoint);
+    float CoordZ = calcNewPoint(coeffDirZ, OrdOriZ, timeNewPoint);
+
+    return Point(CoordX, CoordY, CoordZ);
 }
 
+float resampler::coeffDirect(float a, float timePa, float b, float timePb)
+{
+    return ((timePb-timePa)/(b-a));
+}
 
+float resampler::ordOri(float coeffDir, float a, float timePa)
+{
+    return ((timePa)/(coeffDir*a));
+}
+
+float resampler::calcNewPoint(float coeffDir, float OrdOri, float time)
+{
+    return ((time*coeffDir) + OrdOri);
+}
 
 
 
