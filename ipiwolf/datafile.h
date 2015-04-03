@@ -8,6 +8,7 @@ class DataFile : public QVector<Point>
 public:
     DataFile();
     DataFile(int size);
+    void saveInFile(QString filename);
 };
 
 #endif // DATAFILE_H

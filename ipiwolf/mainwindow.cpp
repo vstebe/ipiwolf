@@ -39,4 +39,6 @@ void MainWindow::slotProcess() {
     std::cout << "size : " << df->size()  << std::endl;
 
     ui->_graph->setDataFile(df);
+
+    df->saveInFile(ui->txtFile->currentText() + ".resampled.txt");
 }
