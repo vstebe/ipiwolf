@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "resampler.h"
+#include "datafile.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,11 +18,13 @@ public:
 
 public slots:
     void slotSelectFile();
-    void slotProcess();
+    void slotProcessResampling();
+    void slotProcessFiltering();
+    void slotUpdateGraphAxes();
 
 private:
     Ui::MainWindow *ui;
-    resampler _resampler;
+    DataFile * _currentDataFile;
 };
 
 #endif // MAINWINDOW_H

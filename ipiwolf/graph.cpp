@@ -30,9 +30,9 @@ DataFile * test() {
 
 Graph::Graph(QWidget * parent) : QCustomPlot(parent)
 {
-    addGraph();
-    graph(0)->setPen(QPen(Qt::blue)); // line color blue for first graph
-    graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20))); // first graph will be filled with translucent blue
+    _axeX = true;
+    _axeY = true;
+    _axeZ = true;
 
     // configure right and top axis to show ticks but no labels:
     // (see QCPAxisRect::setupFullAxesBox for a quicker method to do this)
@@ -40,7 +40,7 @@ Graph::Graph(QWidget * parent) : QCustomPlot(parent)
     xAxis2->setTickLabels(false);
     yAxis2->setVisible(true);
     yAxis2->setTickLabels(false);
-    graph(0)->setLineStyle(QCPGraph::lsLine);
+
 
     // make left and bottom axes always transfer their ranges to right and top axes:
     connect(xAxis, SIGNAL(rangeChanged(QCPRange)), xAxis2, SLOT(setRange(QCPRange)));
@@ -55,9 +55,7 @@ Graph::Graph(QWidget * parent) : QCustomPlot(parent)
 
     setNotAntialiasedElements(QCP::aeAll);
 
-    graph(0)->setAdaptiveSampling(true);
 
-    graph(0)->setAntialiasedFill(false);
 
     setDataFile(test());
 }
@@ -67,23 +65,68 @@ Graph::~Graph()
 
 }
 
-
-void Graph::setDataFile(DataFile *data) {
-
-    int zap = 1;
-
-    QVector<double> x(data->size() / zap);
-    QVector<double> y(data->size() / zap);
-
-    for(int i=0; i<x.size(); i++) {
-        x[i] = i*zap;
-        y[i] = data->at(i*zap).x;
-    }
-
-    graph(0)->setData(x, y);
-    //customPlot->graph(1)->setData(x, y1);
-    // let the ranges scale themselves so graph 0 fits perfectly in the visible area:
-    graph(0)->rescaleAxes();
-    // same thing for graph 1, but only enlarge ranges (in case graph 1 is smaller than graph 0):
+QCPGraph * Graph::addGraph(QCPAxis *keyAxis, QCPAxis *valueAxis) {
+    QCPGraph * graph = QCustomPlot::addGraph(keyAxis, valueAxis);
+    graph->setPen(QPen(Qt::blue)); // line color blue for first graph
+    graph->setLineStyle(QCPGraph::lsLine);
+    graph->setAdaptiveSampling(true);
+    graph->setAntialiasedFill(false);
+    return graph;
 }
 
+
+void Graph::setDataFile(DataFile *data) {
+    _dataFile = data;
+    update();
+}
+
+void Graph::update() {
+    int zap = 1;
+    QVector<double> x(_dataFile->size() / zap);
+    clearGraphs();
+    for(int i=0; i<x.size(); i++) {
+        x[i] = i*zap;
+    }
+    if(_axeX) {
+
+        QVector<double> y(_dataFile->size() / zap);
+        for(int i=0; i<x.size(); i++) {
+            y[i] = _dataFile->at(i*zap).x;
+        }
+        QCPGraph * graph = addGraph();
+        graph->setData(x, y);
+        graph->setPen(QPen(Qt::blue)); // line color blue for first graph
+        graph->rescaleAxes();
+    }
+    if(_axeY) {
+
+        QVector<double> y(_dataFile->size() / zap);
+        for(int i=0; i<x.size(); i++) {
+            y[i] = _dataFile->at(i*zap).y;
+        }
+        QCPGraph * graph = addGraph();
+        graph->setData(x, y);
+        graph->setPen(QPen(Qt::red)); // line color blue for first graph
+        graph->rescaleAxes();
+    }
+    if(_axeZ) {
+
+        QVector<double> y(_dataFile->size() / zap);
+        for(int i=0; i<x.size(); i++) {
+            y[i] = _dataFile->at(i*zap).z;
+        }
+        QCPGraph * graph = addGraph();
+        graph->setData(x, y);
+        graph->setPen(QPen(Qt::green)); // line color blue for first graph
+        graph->rescaleAxes();
+    }
+
+    QCustomPlot::update();
+}
+
+
+void Graph::setAxes(bool axeX, bool axeY, bool axeZ) {
+    _axeX = axeX;
+    _axeY = axeY;
+    _axeZ = axeZ;
+}

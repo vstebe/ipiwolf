@@ -98,7 +98,6 @@ DataFile *resampler::resample()
                 Point a (listPrec[4].toFloat(),listPrec[5].toFloat(),listPrec[6].toFloat());     //first point
                 Point b (listCou[4].toFloat(),listCou[5].toFloat(),listCou[6].toFloat());     //second point
                 timePa = timePb - timeBetweenPoints;
-                std::cout  << "A : " << a << "       B : " << b << std::endl;
                 final->push_back(calcCoord(a, timePa, b, timePb, timeNewPoint));     //compute the new point
             }
         }
@@ -108,7 +107,6 @@ DataFile *resampler::resample()
             QDate parsedDate = QDate::fromString(listCou[0], "dd'/'MM'/'yyyy");
             if(parsedDate.isValid()) {
                 currentDate = parsedDate;
-                qDebug() << "listCou0 : " << listCou[0];
                 timeBetweenPoints = 1.f / listCou[2].toFloat();
             }
         }

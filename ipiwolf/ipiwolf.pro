@@ -20,14 +20,16 @@ SOURCES += main.cpp\
         resampler.cpp\
         datafile.cpp \
         qcustomplot.cpp \
-    graph.cpp
+    graph.cpp \
+    frequencyfilter.cpp
 
 HEADERS  += mainwindow.h\
         point.h\
         resampler.h\
         datafile.h \
         qcustomplot.h \
-        graph.h
+        graph.h \
+    frequencyfilter.h
 
 FORMS    += mainwindow.ui
 

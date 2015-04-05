@@ -3,6 +3,9 @@
 
 #include <QFileDialog>
 
+#include "resampler.h"
+#include "frequencyfilter.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -10,7 +13,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     connect(ui->btnOpen, &QPushButton::clicked, this, &MainWindow::slotSelectFile);
-    connect(ui->btnProcess, &QPushButton::clicked, this, &MainWindow::slotProcess);
+    connect(ui->btnProcess, &QPushButton::clicked, this, &MainWindow::slotProcessResampling);
+    connect(ui->btnFilter, &QPushButton::clicked, this, &MainWindow::slotProcessFiltering);
+    connect(ui->radioGraphX, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
+    connect(ui->radioGraphY, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
+    connect(ui->radioGraphZ, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
 }
 
 MainWindow::~MainWindow()
@@ -27,18 +34,43 @@ void MainWindow::slotSelectFile()
     ui->txtFile->setEditText(fileName);
 }
 
-void MainWindow::slotProcess() {
+void MainWindow::slotProcessResampling() {
     resampler r;
     r.setFile(ui->txtFile->currentText());
     r.setEndDate(ui->txtDateEnd->date());
     r.setStartDate(ui->txtDateStart->date());
     r.setFrequency(ui->txtFreq->value());
 
-    DataFile *df = r.resample();
+    _currentDataFile = r.resample();
 
-    std::cout << "size : " << df->size()  << std::endl;
+
+    ui->_graph->setDataFile(_currentDataFile);
+
+    _currentDataFile->saveInFile(ui->txtFile->currentText() + ".resampled.txt");
+}
+
+void MainWindow::slotUpdateGraphAxes() {
+    ui->_graph->setAxes(ui->radioGraphX->isChecked(), ui->radioGraphY->isChecked(), ui->radioGraphZ->isChecked());
+    ui->_graph->update();
+}
+
+void MainWindow::slotProcessFiltering() {
+    FrequencyFilter filter;
+    if(ui->radioX->isChecked())
+        filter.setAxes(FrequencyFilter::X);
+    else if(ui->radioY->isChecked())
+        filter.setAxes(FrequencyFilter::Y);
+    else if(ui->radioZ->isChecked())
+        filter.setAxes(FrequencyFilter::Z);
+    else
+        filter.setAxes(FrequencyFilter::XYZ);
+
+    filter.setDatafile(_currentDataFile);
+
+    filter.setThreshold(ui->txtThreshold->value());
+
+    DataFile *df = filter.process();
 
     ui->_graph->setDataFile(df);
-
-    df->saveInFile(ui->txtFile->currentText() + ".resampled.txt");
+    df->saveInFile(ui->txtFile->currentText() + ".filtered.txt");
 }
