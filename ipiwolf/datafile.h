@@ -9,6 +9,11 @@ public:
     DataFile();
     DataFile(int size);
     void saveInFile(QString filename);
+    void setSamplingRate(int samplingRate);
+    int getSamplingRate() const;
+
+protected:
+    int _samplingRate;
 };
 
 #endif // DATAFILE_H

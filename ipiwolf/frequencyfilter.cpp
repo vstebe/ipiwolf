@@ -71,9 +71,14 @@ DataFile * FrequencyFilter::process() {
     }
 
     // separate low and high frequencies
-    int start = (_threshold*_dataFile->size())/100;
-    start = _threshold;
-    int end = _dataFile->size();
+    int start =(_threshold*_dataFile->getSamplingRate())/_dataFile->size();
+    int end = _dataFile->size() - start;
+
+    std::cout << "start : " << start << std::endl;
+    std::cout << "end : " << end << std::endl;
+    std::cout << "size : " << _dataFile->size() << std::endl;
+
+
     for(k=start;k<end;k++) out1[k][0]=out1[k][1]= 0.0;
     for(k=0;k<start;k++)   out2[k][0]=out2[k][1]= 0.0;
 
@@ -84,7 +89,7 @@ DataFile * FrequencyFilter::process() {
     fftw_execute(q);
 
     DataFile * output = new DataFile;
-
+    output->setSamplingRate(_dataFile->getSamplingRate());
     for (k = 0; k < _dataFile->size(); k++) {
         output->push_back(Point(amplitude[k],amplitude1[k]/((_dataFile->size()-1)),amplitude2[k]/((_dataFile->size()-1))));
     }
