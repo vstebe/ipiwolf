@@ -3,7 +3,7 @@
 /**
 * \brief Constructor of the object resampler
 */
-Resampler::resampler()
+Resampler::Resampler()
 {
     setStartDate(QDate::currentDate());
     setEndDate(QDate::currentDate());
@@ -13,7 +13,7 @@ Resampler::resampler()
 * \brief Constructor of the object resampler
 * \param filename the name of the file
 */
-Resampler::resampler(QString filename)
+Resampler::Resampler(QString filename)
 {
     setFile(filename);
     setStartDate(QDate::currentDate());
@@ -65,7 +65,7 @@ void Resampler::setFrequency (int freq)
 * \brief Resample the file with the _newFrequency
 * \return a formatted Datafile of the sample, between the two dates given and at the new Frequency
 */
-DataFile *Resampler::resample()
+DataFilePtr Resampler::resample()
 {
     int nbLigTot = nbLines();
     int nbLig = 0;
@@ -73,10 +73,10 @@ DataFile *Resampler::resample()
     if(!_file.open(QIODevice::ReadOnly))
     {
         std::cout << "Impossible d'ouvrir le fichier !" << std::endl;
-        return NULL;
+        return DataFilePtr();
     }
 
-    DataFile * final = new DataFile();
+    DataFilePtr final(new DataFile());
     QTextStream in(&_file);
     QDate currentDate;
     QString line = in.readLine();

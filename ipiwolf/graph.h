@@ -9,14 +9,14 @@ class Graph : public QCustomPlot
     Q_OBJECT
 public:
     Graph(QWidget * parent = NULL);
-    void setDataFile(DataFile * data);
+    void setDataFile(DataFilePtr data);
     void setAxes(bool axeX, bool axeY, bool axeZ);
     void update();
     QCPGraph * addGraph(QCPAxis *keyAxis = NULL, QCPAxis *valueAxis = NULL);
     ~Graph();
 
 protected:
-    DataFile * _dataFile;
+    DataFilePtr _dataFile;
     bool _axeX;
     bool _axeY;
     bool _axeZ;
