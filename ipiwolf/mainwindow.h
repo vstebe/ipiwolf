@@ -21,6 +21,7 @@ public slots:
     void slotProcessResampling();
     void slotProcessFiltering();
     void slotUpdateGraphAxes();
+    void slotSaveResampledFile();
 
 private:
     Ui::MainWindow *ui;

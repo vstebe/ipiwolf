@@ -54,6 +54,10 @@ void MainWindow::slotUpdateGraphAxes() {
     ui->_graph->update();
 }
 
+void MainWindow::slotSaveResampledFile() {
+
+}
+
 void MainWindow::slotProcessFiltering() {
     FrequencyFilter filter;
     if(ui->radioX->isChecked())
