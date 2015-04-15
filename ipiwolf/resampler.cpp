@@ -29,7 +29,7 @@ void resampler::setFile (QString filename)
 {
     _file.setFileName(filename);
     if (!_file.exists())
-        printf("Le fichier n'existe pas !");
+        std::cout << "Impossible d'ouvrir le fichier !" << std::endl;
 }
 
 /**
@@ -67,9 +67,11 @@ void resampler::setFrequency (int freq)
 */
 DataFile *resampler::resample()
 {
+    int i = nbLines();
+
     if(!_file.open(QIODevice::ReadOnly))
     {
-        printf("Impossible d'ouvrir le fichier !");
+        std::cout << "Impossible d'ouvrir le fichier !" << std::endl;
         return NULL;
     }
 
@@ -108,9 +110,12 @@ DataFile *resampler::resample()
             if(parsedDate.isValid()) {
                 currentDate = parsedDate;
                 timeBetweenPoints = 1.f / listCou[2].toFloat();
+
             }
         }
+
     }
+    _file.close();
 
     return final;
 }
@@ -147,6 +152,41 @@ float resampler::calcNewPoint(float coeffDir, float OrdOri, float time)
     return ((time*coeffDir) + OrdOri);
 }
 
+int resampler::nbLines()
+{
+    if(!_file.open(QIODevice::ReadOnly))
+    {
+        std::cout << "Impossible d'ouvrir le fichier !" << std::endl;
+        return 0;
+    }
+
+    QTextStream in(&_file);
+    QString line = in.readLine();
+    QStringList list = line.split("\t");
+    QDate currentDate;
+    int nbLines = 0;
+
+    while (!in.atEnd() && (currentDate.isNull() || currentDate <= _endDate))
+    {
+        if (!list[0].trimmed().isEmpty())       //if the date changes
+        {
+            QDate parsedDate = QDate::fromString(list[0], "dd'/'MM'/'yyyy");
+            if(parsedDate.isValid()) {
+                currentDate = parsedDate;
+            }
+
+        }
+
+        if  (!currentDate.isNull())         //if this is a correct line
+            nbLines += 1;
+
+       line = in.readLine();
+       list = line.split("\t");
+    }
+   // std::cout << "nbLines : " << nbLines << std::endl;
+    _file.close();
+    return nbLines;
+}
 
 
 

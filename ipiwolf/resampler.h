@@ -23,6 +23,7 @@ public:
     float coeffDirect(float a, float timePa, float b, float timePb);
     float ordOri(float coeffDir, float a, float timPa);
     float calcNewPoint(float coeffDir, float OrdOri, float time);
+    int nbLines ();
 
 
 private:
