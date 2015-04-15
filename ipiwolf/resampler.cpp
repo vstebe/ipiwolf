@@ -118,13 +118,13 @@ DataFilePtr Resampler::resample()
         {
             nbLig += 1;
         }
-      //  setProgress((int)((nbLig/nbLigTot) * 100));
+     setProgress((int)((nbLig/nbLigTot) * 100));
     }
 
     _file.close();
 
     final->setSamplingRate(_newFrequency);
-   // setProgress(100);
+    setProgress(100);
     return final;
 }
 

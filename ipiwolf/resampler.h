@@ -9,9 +9,9 @@
 #include "datafile.h"
 #include "point.h"
 
-class Resampler //: public QObject
+class Resampler : public QObject
 {
-   // Q_OBJECT
+    Q_OBJECT
 
 public:
     Resampler();
@@ -28,7 +28,7 @@ public:
     int nbLines ();
 
 signals:
-   // void setProgress(int pourcentage);
+    void setProgress(int pourcentage);
 
 private:
     QDate _startDate;
