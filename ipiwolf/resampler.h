@@ -9,11 +9,13 @@
 #include "datafile.h"
 #include "point.h"
 
-class resampler
+class Resampler //: public QObject
 {
+   // Q_OBJECT
+
 public:
-    resampler();
-    resampler(QString filename);
+    Resampler();
+    Resampler(QString filename);
     void setFile (QString filename);
     void setFrequency (int freq);
     void setStartDate(QDate startDate);
@@ -25,6 +27,8 @@ public:
     float calcNewPoint(float coeffDir, float OrdOri, float time);
     int nbLines ();
 
+signals:
+   // void setProgress(int pourcentage);
 
 private:
     QDate _startDate;

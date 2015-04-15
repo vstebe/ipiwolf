@@ -3,7 +3,7 @@
 /**
 * \brief Constructor of the object resampler
 */
-resampler::resampler()
+Resampler::resampler()
 {
     setStartDate(QDate::currentDate());
     setEndDate(QDate::currentDate());
@@ -13,7 +13,7 @@ resampler::resampler()
 * \brief Constructor of the object resampler
 * \param filename the name of the file
 */
-resampler::resampler(QString filename)
+Resampler::resampler(QString filename)
 {
     setFile(filename);
     setStartDate(QDate::currentDate());
@@ -25,7 +25,7 @@ resampler::resampler(QString filename)
 * \brief Set the file you want to resample
 * \param filename the name of the file
 */
-void resampler::setFile (QString filename)
+void Resampler::setFile (QString filename)
 {
     _file.setFileName(filename);
     if (!_file.exists())
@@ -36,7 +36,7 @@ void resampler::setFile (QString filename)
 * \brief Set the startDate
 * \param startDate the date you want to set
 */
-void resampler::setStartDate(QDate startDate)
+void Resampler::setStartDate(QDate startDate)
 {
     this->_startDate = startDate;
 }
@@ -46,7 +46,7 @@ void resampler::setStartDate(QDate startDate)
 * \brief Set the endDate
 * \param endDate the date you want to set
 */
-void resampler::setEndDate(QDate endDate)
+void Resampler::setEndDate(QDate endDate)
 {
     this->_endDate = endDate;
 }
@@ -55,7 +55,7 @@ void resampler::setEndDate(QDate endDate)
 * \brief Set the frequency of the sample
 * \param freq the new frequency
 */
-void resampler::setFrequency (int freq)
+void Resampler::setFrequency (int freq)
 {
     this->_newFrequency = freq;
 }
@@ -65,9 +65,10 @@ void resampler::setFrequency (int freq)
 * \brief Resample the file with the _newFrequency
 * \return a formatted Datafile of the sample, between the two dates given and at the new Frequency
 */
-DataFile *resampler::resample()
+DataFile *Resampler::resample()
 {
-    int i = nbLines();
+    int nbLigTot = nbLines();
+    int nbLig = 0;
 
     if(!_file.open(QIODevice::ReadOnly))
     {
@@ -113,16 +114,21 @@ DataFile *resampler::resample()
 
             }
         }
-
+        if (!currentDate.isNull())
+        {
+            nbLig += 1;
+        }
+      //  setProgress((int)((nbLig/nbLigTot) * 100));
     }
+
     _file.close();
 
     final->setSamplingRate(_newFrequency);
-
+   // setProgress(100);
     return final;
 }
 
-Point resampler::calcCoord(Point a, float timePa, Point b, float timePb, float timeNewPoint)
+Point Resampler::calcCoord(Point a, float timePa, Point b, float timePb, float timeNewPoint)
 {
     float coeffDirX = coeffDirect(a.x, timePa, b.x, timePb);        //process the coeff
     float coeffDirY = coeffDirect(a.y, timePa, b.y, timePb);
@@ -139,22 +145,22 @@ Point resampler::calcCoord(Point a, float timePa, Point b, float timePb, float t
     return Point(CoordX, CoordY, CoordZ);
 }
 
-float resampler::coeffDirect(float a, float timePa, float b, float timePb)
+float Resampler::coeffDirect(float a, float timePa, float b, float timePb)
 {
     return ((b-a)/(timePb-timePa));
 }
 
-float resampler::ordOri(float coeffDir, float a, float timePa)
+float Resampler::ordOri(float coeffDir, float a, float timePa)
 {
     return ((a)-(coeffDir*timePa));
 }
 
-float resampler::calcNewPoint(float coeffDir, float OrdOri, float time)
+float Resampler::calcNewPoint(float coeffDir, float OrdOri, float time)
 {
     return ((time*coeffDir) + OrdOri);
 }
 
-int resampler::nbLines()
+int Resampler::nbLines()
 {
     if(!_file.open(QIODevice::ReadOnly))
     {
