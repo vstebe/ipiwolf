@@ -20,7 +20,7 @@ public:
     void setFrequency (int freq);
     void setStartDate(QDate startDate);
     void setEndDate(QDate endDate);
-    DataFile * resample();
+    DataFilePtr resample();
     Point calcCoord(Point a, float timePa, Point b, float timePb, float timeNewPoint);
     float coeffDirect(float a, float timePa, float b, float timePb);
     float ordOri(float coeffDir, float a, float timPa);

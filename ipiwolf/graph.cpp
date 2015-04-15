@@ -1,33 +1,6 @@
 #include "graph.h"
 
 
-DataFile * test() {
-    QFile file("/home/vincent/accel/accel/wacu100_Loups_cc_ACC-15_05_2014-08_00_01--03_07_2014-14_35_15-50Hz.txt");
-            file.open(QIODevice::ReadOnly | QIODevice::Text);
-
-            QTextStream in(&file);
-            //QVector<double> x, y;
-            DataFile * data = new DataFile();
-            int t = 0;
-            int d = 0;
-            while (!in.atEnd())
-            {
-                QString line = in.readLine(); //read one line at a time
-                if(t == 0) {
-
-                    QStringList lstLine = line.split('\t');
-
-                    data->push_back(Point(lstLine[0].toDouble(), 0, 0));
-
-                }
-                d++;
-                  t = (++t==5) ? 0 : t;
-                if(data->size() == 1000000)
-                    break;
-            }
-            return data;
-}
-
 Graph::Graph(QWidget * parent) : QCustomPlot(parent)
 {
     _axeX = true;
@@ -55,9 +28,6 @@ Graph::Graph(QWidget * parent) : QCustomPlot(parent)
 
     setNotAntialiasedElements(QCP::aeAll);
 
-
-
-    setDataFile(test());
 }
 
 Graph::~Graph()
@@ -75,7 +45,7 @@ QCPGraph * Graph::addGraph(QCPAxis *keyAxis, QCPAxis *valueAxis) {
 }
 
 
-void Graph::setDataFile(DataFile *data) {
+void Graph::setDataFile(DataFilePtr data) {
     _dataFile = data;
     update();
 }
