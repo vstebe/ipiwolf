@@ -81,17 +81,16 @@ void Graph::setDataFile(DataFile *data) {
 }
 
 void Graph::update() {
-    int zap = 1;
-    QVector<double> x(_dataFile->size() / zap);
+    QVector<double> x(_dataFile->size());
     clearGraphs();
     for(int i=0; i<x.size(); i++) {
-        x[i] = i*zap;
+        x[i] = ((float) i) / _dataFile->getSamplingRate();
     }
     if(_axeX) {
 
-        QVector<double> y(_dataFile->size() / zap);
+        QVector<double> y(_dataFile->size());
         for(int i=0; i<x.size(); i++) {
-            y[i] = _dataFile->at(i*zap).x;
+            y[i] = _dataFile->at(i).x;
         }
         QCPGraph * graph = addGraph();
         graph->setData(x, y);
@@ -100,9 +99,9 @@ void Graph::update() {
     }
     if(_axeY) {
 
-        QVector<double> y(_dataFile->size() / zap);
+        QVector<double> y(_dataFile->size());
         for(int i=0; i<x.size(); i++) {
-            y[i] = _dataFile->at(i*zap).y;
+            y[i] = _dataFile->at(i).y;
         }
         QCPGraph * graph = addGraph();
         graph->setData(x, y);
@@ -111,9 +110,9 @@ void Graph::update() {
     }
     if(_axeZ) {
 
-        QVector<double> y(_dataFile->size() / zap);
+        QVector<double> y(_dataFile->size());
         for(int i=0; i<x.size(); i++) {
-            y[i] = _dataFile->at(i*zap).z;
+            y[i] = _dataFile->at(i).z;
         }
         QCPGraph * graph = addGraph();
         graph->setData(x, y);
@@ -129,4 +128,5 @@ void Graph::setAxes(bool axeX, bool axeY, bool axeZ) {
     _axeX = axeX;
     _axeY = axeY;
     _axeZ = axeZ;
+    update();
 }

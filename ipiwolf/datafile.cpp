@@ -4,6 +4,7 @@
 
 DataFile::DataFile()
 {
+    _samplingRate = 0;
 }
 
 DataFile::DataFile(int size) : QVector<Point>(size) {}
@@ -17,4 +18,13 @@ void DataFile::saveInFile(QString filename) {
             stream  << it->x << '\t' << it->y << '\t' << it->z << endl;
         }
     }
+}
+
+
+void DataFile::setSamplingRate(int samplingRate) {
+    _samplingRate = samplingRate;
+}
+
+int DataFile::getSamplingRate() const {
+    return _samplingRate;
 }

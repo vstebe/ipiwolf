@@ -117,6 +117,8 @@ DataFile *resampler::resample()
     }
     _file.close();
 
+    final->setSamplingRate(_newFrequency);
+
     return final;
 }
 
