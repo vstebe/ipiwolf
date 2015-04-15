@@ -25,7 +25,7 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
-    DataFile * _currentDataFile;
+    DataFilePtr _currentDataFile;
 };
 
 #endif // MAINWINDOW_H

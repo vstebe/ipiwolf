@@ -5,7 +5,7 @@
 
 FrequencyFilter::FrequencyFilter()
 {
-    _dataFile = NULL;
+    _dataFile = DataFilePtr();
 }
 
 FrequencyFilter::~FrequencyFilter()
@@ -13,7 +13,7 @@ FrequencyFilter::~FrequencyFilter()
 
 }
 
-void FrequencyFilter::setDatafile(DataFile *dataFile) {
+void FrequencyFilter::setDatafile(DataFilePtr dataFile) {
     _dataFile = dataFile;
 }
 
@@ -25,10 +25,10 @@ void FrequencyFilter::setAxes(Axe axe) {
     _axe = axe;
 }
 
-DataFile * FrequencyFilter::process() {
+DataFilePtr FrequencyFilter::process() {
     if(!_dataFile) {
         qDebug() << "datafile nul";
-        return NULL;
+        return DataFilePtr();
     }
 
     fftw_complex *out1, *out2;
@@ -88,7 +88,7 @@ DataFile * FrequencyFilter::process() {
     q = fftw_plan_dft_c2r_1d(_dataFile->size(), out2, amplitude2, FFTW_ESTIMATE);
     fftw_execute(q);
 
-    DataFile * output = new DataFile;
+    DataFilePtr output(new DataFile());
     output->setSamplingRate(_dataFile->getSamplingRate());
     for (k = 0; k < _dataFile->size(); k++) {
         output->push_back(Point(amplitude[k],amplitude1[k]/((_dataFile->size()-1)),amplitude2[k]/((_dataFile->size()-1))));

@@ -9,22 +9,26 @@
 #include "datafile.h"
 #include "point.h"
 
-class resampler
+class Resampler : public QObject
 {
+    Q_OBJECT
+
 public:
-    resampler();
-    resampler(QString filename);
+    Resampler();
+    Resampler(QString filename);
     void setFile (QString filename);
     void setFrequency (int freq);
     void setStartDate(QDate startDate);
     void setEndDate(QDate endDate);
-    DataFile * resample();
+    DataFilePtr resample();
     Point calcCoord(Point a, float timePa, Point b, float timePb, float timeNewPoint);
     float coeffDirect(float a, float timePa, float b, float timePb);
     float ordOri(float coeffDir, float a, float timPa);
     float calcNewPoint(float coeffDir, float OrdOri, float time);
     int nbLines ();
 
+signals:
+    void setProgress(int pourcentage);
 
 private:
     QDate _startDate;

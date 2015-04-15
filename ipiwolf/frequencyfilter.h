@@ -9,14 +9,14 @@ public:
     enum Axe {X, Y, Z, XYZ};
 
     FrequencyFilter();
-    void setDatafile(DataFile * dataFile);
+    void setDatafile(DataFilePtr dataFile);
     void setThreshold(int threshold);
     void setAxes(Axe axes);
-    DataFile * process();
+    DataFilePtr process();
     ~FrequencyFilter();
 
 protected:
-    DataFile * _dataFile;
+    DataFilePtr _dataFile;
     Axe _axe;
     int _threshold;
 };

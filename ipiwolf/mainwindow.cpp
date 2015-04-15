@@ -35,7 +35,7 @@ void MainWindow::slotSelectFile()
 }
 
 void MainWindow::slotProcessResampling() {
-    resampler r;
+    Resampler r;
     r.setFile(ui->txtFile->currentText());
     r.setEndDate(ui->txtDateEnd->date());
     r.setStartDate(ui->txtDateStart->date());
@@ -73,7 +73,7 @@ void MainWindow::slotProcessFiltering() {
 
     filter.setThreshold(ui->txtThreshold->value());
 
-    DataFile *df = filter.process();
+    DataFilePtr df = filter.process();
 
     ui->_graph->setDataFile(df);
     df->saveInFile(ui->txtFile->currentText() + ".filtered.txt");
