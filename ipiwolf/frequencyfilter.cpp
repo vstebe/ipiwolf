@@ -25,25 +25,22 @@ void FrequencyFilter::setAxes(Axe axe) {
     _axe = axe;
 }
 
-DataFilePtr FrequencyFilter::process() {
+HistogramPtr FrequencyFilter::getHistogram() {
     if(!_dataFile) {
         qDebug() << "datafile nul";
         return DataFilePtr();
     }
 
-    fftw_complex *out1, *out2;
-    fftw_plan p, q;
+    fftw_complex *out1;
+    fftw_plan p;
     int k;
-    FILE *fo;
-    char nomf[200];
 
-    double *magnitude = (double *)malloc((_dataFile->size())*sizeof(double)); //norme du spectre
+
     double *amplitude = (double *)malloc((_dataFile->size())*sizeof(double)); // signal entré
-    double *amplitude1 = (double *)malloc((_dataFile->size())*sizeof(double)); // signal reconstruit
-    double *amplitude2 = (double *)malloc((_dataFile->size())*sizeof(double)); // signal reconstruit
+
 
     out1 = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * (_dataFile->size())); // basses freq nulles
-    out2 = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * (_dataFile->size())); // hautes freq nulles
+    //out2 = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * (_dataFile->size())); // hautes freq nulles
 
     switch (_axe) {
         case X:
@@ -63,7 +60,21 @@ DataFilePtr FrequencyFilter::process() {
     }
 
     p = fftw_plan_dft_r2c_1d(_dataFile->size(), amplitude, out1, FFTW_ESTIMATE);
+
     fftw_execute(p);
+
+    HistogramPtr res(new Histogram(_dataFile->size()));
+    for(int i=0; i<_dataFile->size(); i++) {
+        (*res)[i].frequency = i;
+        (*res)[i].amplitude = out1[i][0];
+    }
+
+    return res;
+}
+
+DataFilePtr FrequencyFilter::process() {
+/*
+
     memcpy(out2, out1, _dataFile->size()*sizeof(fftw_complex));
 
     for (k = 0; k < _dataFile->size(); k++) {
@@ -94,19 +105,15 @@ DataFilePtr FrequencyFilter::process() {
         output->push_back(Point(amplitude[k],amplitude1[k]/((_dataFile->size()-1)),amplitude2[k]/((_dataFile->size()-1))));
     }
 
-    /*DataFile * output = new DataFile;
-    if (wRange > _dataFile->size()) wRange=_dataFile->size();
-    for(k = 0; k < wRange; k++) {
-        fprintf(fFreq,"%g\n",magnitude[k]);
-    }
-    fclose(fFreq);
 
-    fclose(fo);*/
     fftw_destroy_plan(p);
     fftw_destroy_plan(q);
     free(amplitude);free(amplitude1);free(amplitude2);
     free(magnitude);
     fftw_free(out1);fftw_free(out2);
 
-    return output;
+    return output;*/
+
+     DataFilePtr output(new DataFile());
+     return output;
 }

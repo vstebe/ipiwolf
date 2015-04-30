@@ -2,6 +2,13 @@
 #define FREQUENCYFILTER_H
 
 #include "datafile.h"
+struct HistogramPoint {
+    double frequency;
+    double amplitude;
+};
+
+typedef QVector<HistogramPoint> Histogram;
+typedef QSharedPointer<Histogram> HistogramPtr;
 
 class FrequencyFilter
 {
@@ -12,6 +19,7 @@ public:
     void setDatafile(DataFilePtr dataFile);
     void setThreshold(int threshold);
     void setAxes(Axe axes);
+    HistogramPtr getHistogram();
     DataFilePtr process();
     ~FrequencyFilter();
 
@@ -20,5 +28,8 @@ protected:
     Axe _axe;
     int _threshold;
 };
+
+
+
 
 #endif // FREQUENCYFILTER_H

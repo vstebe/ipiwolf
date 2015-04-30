@@ -348,13 +348,44 @@
         <widget class="QWidget" name="widget_4" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <widget class="Graph" name="_graph" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           <widget class="QTabWidget" name="tabGraph">
+            <property name="currentIndex">
+             <number>1</number>
             </property>
+            <widget class="QWidget" name="tab">
+             <attribute name="title">
+              <string>Signal</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <item>
+               <widget class="Graph" name="_graph" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="tab_3">
+             <attribute name="title">
+              <string>Histogram</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <item>
+               <widget class="HistogramGraph" name="_histogramGraph" native="true">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </widget>
           </item>
           <item>
@@ -408,6 +439,12 @@
    <class>Graph</class>
    <extends>QWidget</extends>
    <header>graph.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HistogramGraph</class>
+   <extends>QWidget</extends>
+   <header>histogramgraph.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -19,7 +19,8 @@ SOURCES += main.cpp\
         datafile.cpp \
         qcustomplot.cpp \
     graph.cpp \
-    frequencyfilter.cpp
+    frequencyfilter.cpp \
+    histogramgraph.cpp
 
 HEADERS  += mainwindow.h\
         point.h\
@@ -27,7 +28,8 @@ HEADERS  += mainwindow.h\
         datafile.h \
         qcustomplot.h \
         graph.h \
-    frequencyfilter.h
+    frequencyfilter.h \
+    histogramgraph.h
 
 FORMS    += mainwindow.ui
 

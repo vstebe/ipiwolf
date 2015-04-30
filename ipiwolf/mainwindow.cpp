@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->radioGraphX, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
     connect(ui->radioGraphY, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
     connect(ui->radioGraphZ, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
+    connect(ui->btnSaveResampled, &QPushButton::clicked, this, &MainWindow::slotSaveResampledFile);
 }
 
 MainWindow::~MainWindow()
@@ -55,6 +56,11 @@ void MainWindow::slotUpdateGraphAxes() {
 }
 
 void MainWindow::slotSaveResampledFile() {
+    if(_currentDataFile.isNull()) return;
+
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save File"),
+                               tr("Text (*.txt)"));
+    _currentDataFile->saveInFile(filename);
 
 }
 
