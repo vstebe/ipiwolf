@@ -28,7 +28,7 @@ void FrequencyFilter::setAxes(Axe axe) {
 HistogramPtr FrequencyFilter::getHistogram() {
     if(!_dataFile) {
         qDebug() << "datafile nul";
-        return DataFilePtr();
+        return HistogramPtr();
     }
 
     fftw_complex *out1;
@@ -65,8 +65,8 @@ HistogramPtr FrequencyFilter::getHistogram() {
 
     HistogramPtr res(new Histogram(_dataFile->size()));
     for(int i=0; i<_dataFile->size(); i++) {
-        (*res)[i].frequency = i;
-        (*res)[i].amplitude = out1[i][0];
+        (*res)[i].frequency = (((double)i)*_dataFile->getSamplingRate())/_dataFile->size();;
+        (*res)[i].amplitude = sqrt(out1[i][0]*out1[i][0] + out1[i][1]*out1[i][1]);
     }
 
     return res;

@@ -6,6 +6,9 @@
 
 #include "point.h"
 
+class DataFile;
+typedef QSharedPointer<DataFile> DataFilePtr;
+
 class DataFile : public QVector<Point>
 {
 public:
@@ -15,10 +18,13 @@ public:
     void setSamplingRate(int samplingRate);
     int getSamplingRate() const;
 
+    static DataFilePtr openFile(const QString& filename);
+
 protected:
     int _samplingRate;
 };
 
-typedef QSharedPointer<DataFile> DataFilePtr;
+std::ostream& operator << (std::ostream& O, const DataFile& d);
+
 
 #endif // DATAFILE_H

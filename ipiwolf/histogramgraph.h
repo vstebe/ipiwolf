@@ -1,14 +1,14 @@
 #ifndef HISTOGRAMGRAPH_H
 #define HISTOGRAMGRAPH_H
 
-#include "datafile.h"
+#include "histogram.h"
 #include "qcustomplot.h"
 
 class HistogramGraph : public QCustomPlot
 {
 public:
     HistogramGraph(QWidget * parent = NULL);
-    void setDataFile(DataFilePtr dataFile);
+    void setHistogram(HistogramPtr histo);
     ~HistogramGraph();
 };
 

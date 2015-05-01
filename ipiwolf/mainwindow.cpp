@@ -5,6 +5,7 @@
 
 #include "resampler.h"
 #include "frequencyfilter.h"
+#include "samplingasker.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -19,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->radioGraphY, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
     connect(ui->radioGraphZ, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
     connect(ui->btnSaveResampled, &QPushButton::clicked, this, &MainWindow::slotSaveResampledFile);
+    connect(ui->btnProcessHistogram, &QPushButton::clicked, this, &MainWindow::slotProcessHistogram);
 }
 
 MainWindow::~MainWindow()
@@ -33,6 +35,8 @@ void MainWindow::slotSelectFile()
                                                     tr("Fichiers textes (*.txt);;Tous les fichiers (*)"));
 
     ui->txtFile->setEditText(fileName);
+
+
 }
 
 void MainWindow::slotProcessResampling() {
@@ -83,4 +87,41 @@ void MainWindow::slotProcessFiltering() {
 
     ui->_graph->setDataFile(df);
     df->saveInFile(ui->txtFile->currentText() + ".filtered.txt");
+}
+
+
+void MainWindow::slotProcessHistogram() {
+    if(_currentDataFile.isNull())
+        _currentDataFile = DataFile::openFile(ui->txtFile->currentText());
+
+    SamplingAsker asker(this);
+    if(asker.exec() == QDialog::Accepted)
+        _currentDataFile->setSamplingRate(asker.getSamplingRate());
+    else
+        return;
+
+    qDebug() << "Sampling rate : " << _currentDataFile->getSamplingRate();
+
+    std::cout << _currentDataFile->size() << std::endl;
+    std::cout << (*_currentDataFile) << std::endl;
+
+    FrequencyFilter filter;
+    /*if(ui->radioX->isChecked())
+        filter.setAxes(FrequencyFilter::X);
+    else if(ui->radioY->isChecked())
+        filter.setAxes(FrequencyFilter::Y);
+    else if(ui->radioZ->isChecked())
+        filter.setAxes(FrequencyFilter::Z);
+    else
+        filter.setAxes(FrequencyFilter::XYZ);*/
+
+     filter.setAxes(FrequencyFilter::X);
+
+    filter.setDatafile(_currentDataFile);
+
+    HistogramPtr histo = filter.getHistogram();
+
+    std::cout << (*histo) << std::endl;
+
+    ui->_histogramGraph->setHistogram(histo);
 }

@@ -1,14 +1,10 @@
 #ifndef FREQUENCYFILTER_H
 #define FREQUENCYFILTER_H
 
-#include "datafile.h"
-struct HistogramPoint {
-    double frequency;
-    double amplitude;
-};
+#include <QSharedPointer>
 
-typedef QVector<HistogramPoint> Histogram;
-typedef QSharedPointer<Histogram> HistogramPtr;
+#include "datafile.h"
+#include "histogram.h"
 
 class FrequencyFilter
 {

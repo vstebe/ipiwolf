@@ -34,8 +34,22 @@ HistogramGraph::HistogramGraph(QWidget *parent) : QCustomPlot(parent)
 
 }
 
-void HistogramGraph::setDataFile(DataFilePtr dataFile) {
+void HistogramGraph::setHistogram(HistogramPtr histo) {
+    clearGraphs();
 
+    addGraph();
+
+    graph()->setPen(QPen(Qt::blue)); // line color blue for first graph
+    graph()->setAntialiasedFill(false);
+    graph()->setLineStyle(QCPGraph::lsStepCenter);
+
+    QVector<double> ticks(histo->size());
+    QVector<double> data(histo->size());
+    for(int i=0; i<histo->size(); i++) {
+        ticks[i] = (*histo)[i].frequency;
+        data[i] = (*histo)[i].amplitude;
+    }
+    graph()->setData(ticks, data);
 }
 
 HistogramGraph::~HistogramGraph()

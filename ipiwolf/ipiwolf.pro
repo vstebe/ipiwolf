@@ -20,7 +20,9 @@ SOURCES += main.cpp\
         qcustomplot.cpp \
     graph.cpp \
     frequencyfilter.cpp \
-    histogramgraph.cpp
+    histogramgraph.cpp \
+    samplingasker.cpp \
+    histogram.cpp
 
 HEADERS  += mainwindow.h\
         point.h\
@@ -29,9 +31,12 @@ HEADERS  += mainwindow.h\
         qcustomplot.h \
         graph.h \
     frequencyfilter.h \
-    histogramgraph.h
+    histogramgraph.h \
+    histogram.h \
+    samplingasker.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    samplingasker.ui
 
 RESOURCES += \
     resources.qrc

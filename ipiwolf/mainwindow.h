@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "datafile.h"
+#include "histogram.h"
 
 namespace Ui {
 class MainWindow;
@@ -22,10 +23,12 @@ public slots:
     void slotProcessFiltering();
     void slotUpdateGraphAxes();
     void slotSaveResampledFile();
+    void slotProcessHistogram();
 
 private:
     Ui::MainWindow *ui;
     DataFilePtr _currentDataFile;
+    HistogramPtr _currentHistogram;
 };
 
 #endif // MAINWINDOW_H
