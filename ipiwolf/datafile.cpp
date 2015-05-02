@@ -1,6 +1,7 @@
 #include "datafile.h"
 #include <QFile>
 #include <QTextStream>
+#include <QDebug>
 
 DataFile::DataFile()
 {
@@ -34,22 +35,28 @@ DataFilePtr DataFile::openFile(const QString& filename) {
     QTextStream in(&file);
 
     QString line;
-
+    int lineNo = 0;
     while (!in.atEnd())
     {
         line = in.readLine();
-
+        lineNo++;
         if(!line.trimmed().isEmpty()) {
 
             QStringList subLines = line.split("\t");
-            if(subLines.size() != 3)
+            if(subLines.size() != 3) {
+                qDebug() << "La ligne " << lineNo << " est incorrecte";
                 return DataFilePtr();
+            }
             bool ok1, ok2, ok3;
 
             res->append(Point(subLines[0].toDouble(&ok1), subLines[1].toDouble(&ok2), subLines[2].toDouble(&ok3)));
-            if(!ok1 || !ok2 || !ok3)
+            if(!ok1 || !ok2 || !ok3) {
+                qDebug() << "La ligne " << lineNo << " est incorrecte (impossible de parser un double)";
                 return DataFilePtr();
+            }
         }
+
+
     }
 
     file.close();

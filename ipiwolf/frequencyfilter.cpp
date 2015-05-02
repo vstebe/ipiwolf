@@ -36,7 +36,7 @@ HistogramPtr FrequencyFilter::getHistogram() {
     int k;
 
 
-    double *amplitude = (double *)malloc((_dataFile->size())*sizeof(double)); // signal entré
+    double *amplitude = (double *)fftw_malloc((_dataFile->size())*sizeof(double)); // signal entré
 
 
     out1 = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * (_dataFile->size())); // basses freq nulles
@@ -61,13 +61,16 @@ HistogramPtr FrequencyFilter::getHistogram() {
 
     p = fftw_plan_dft_r2c_1d(_dataFile->size(), amplitude, out1, FFTW_ESTIMATE);
 
+
+
     fftw_execute(p);
 
-    HistogramPtr res(new Histogram(_dataFile->size()));
-    for(int i=0; i<_dataFile->size(); i++) {
-        (*res)[i].frequency = (((double)i)*_dataFile->getSamplingRate())/_dataFile->size();;
-        (*res)[i].amplitude = sqrt(out1[i][0]*out1[i][0] + out1[i][1]*out1[i][1]);
-    }
+    HistogramPtr res(new Histogram(out1, _dataFile->size(), _dataFile->getSamplingRate()));
+
+
+    fftw_free(amplitude);
+    fftw_destroy_plan(p);
+    fftw_cleanup();
 
     return res;
 }
@@ -114,6 +117,43 @@ DataFilePtr FrequencyFilter::process() {
 
     return output;*/
 
-     DataFilePtr output(new DataFile());
-     return output;
+    HistogramPtr histo = getHistogram();
+
+    fftw_complex * n = histo->getTab();
+    double *output = (double *)fftw_malloc((histo->getSize())*sizeof(double));
+
+    int start = (_dataFile->size() * _threshold)/_dataFile->getSamplingRate();
+    int end = _dataFile->size() - start;
+
+    for(int i=0; i<histo->getSize(); i++) {
+        if(i>start && i<end) {
+            n[i][0] = histo->getTab()[i][0];
+            n[i][1] = histo->getTab()[i][1];
+         } else {
+            n[i][0] = 0;
+            n[i][1] = 0;
+        }
+    }
+
+    fftw_plan q = fftw_plan_dft_c2r_1d(_dataFile->size(), n, output, FFTW_ESTIMATE);
+
+    fftw_execute(q);
+
+    DataFilePtr newDataFile(new DataFile(_dataFile->size()));
+    newDataFile->setSamplingRate(_dataFile->getSamplingRate());
+    for(int i=0; i<_dataFile->size(); i++) {
+        (*newDataFile)[i] = Point(output[i]/_dataFile->size(),0,0);
+    }
+
+    fftw_destroy_plan(q);
+
+    histo->updateEasyTab();
+
+    std::cout << (*histo) << std::endl;
+
+    std::cout << "start : " << start << std::endl;
+    std::cout << "end : " << end << std::endl;
+    std::cout << "size : " << _dataFile->size() << std::endl;
+
+     return newDataFile;
 }

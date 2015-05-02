@@ -7,11 +7,12 @@ HistogramGraph::HistogramGraph(QWidget *parent) : QCustomPlot(parent)
     xAxis->setTickLength(0, 4);
     xAxis->grid()->setVisible(true);
     xAxis->setRange(0, 8);
+    xAxis->setLabel("");
 
     // prepare y axis:
     yAxis->setRange(0, 12.1);
     yAxis->setPadding(5); // a bit more space to the left border
-    yAxis->setLabel("Power Consumption in\nKilowatts per Capita (2007)");
+    yAxis->setLabel("Amplitude");
     yAxis->grid()->setSubGridVisible(true);
     QPen gridPen;
     gridPen.setStyle(Qt::SolidLine);
@@ -43,11 +44,11 @@ void HistogramGraph::setHistogram(HistogramPtr histo) {
     graph()->setAntialiasedFill(false);
     graph()->setLineStyle(QCPGraph::lsStepCenter);
 
-    QVector<double> ticks(histo->size());
-    QVector<double> data(histo->size());
-    for(int i=0; i<histo->size(); i++) {
-        ticks[i] = (*histo)[i].frequency;
-        data[i] = (*histo)[i].amplitude;
+    QVector<double> ticks(histo->getEasyTab().size());
+    QVector<double> data(histo->getEasyTab().size());
+    for(int i=0; i<histo->getEasyTab().size(); i++) {
+        ticks[i] = histo->getEasyTab()[i].frequency;
+        data[i] = histo->getEasyTab()[i].amplitude;
     }
     graph()->setData(ticks, data);
 }

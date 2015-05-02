@@ -28,35 +28,10 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>Select file :</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;IPIWolf&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="txtFile">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="editable">
-          <bool>true</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string>/tmp/file</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnOpen">
-         <property name="text">
-          <string>Open</string>
+         <property name="textFormat">
+          <enum>Qt::RichText</enum>
          </property>
         </widget>
        </item>
@@ -64,7 +39,56 @@
      </widget>
     </item>
     <item>
+     <widget class="QWidget" name="widget_9" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item>
+        <widget class="QPushButton" name="btnOpenRaw">
+         <property name="text">
+          <string>Open Raw File</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnOpenResampled">
+         <property name="text">
+          <string>Open Resampled File</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>787</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
      <widget class="QWidget" name="widget_3" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <item>
+        <widget class="QLabel" name="lblFileInfo">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QWidget" name="mainForm" native="true">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QTabWidget" name="tabWidget">

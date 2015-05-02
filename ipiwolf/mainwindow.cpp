@@ -13,7 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->btnOpen, &QPushButton::clicked, this, &MainWindow::slotSelectFile);
+    connect(ui->btnOpenRaw, &QPushButton::clicked, this, &MainWindow::slotOpenRaw);
+    connect(ui->btnOpenResampled, &QPushButton::clicked, this, &MainWindow::slotOpenResampled);
     connect(ui->btnProcess, &QPushButton::clicked, this, &MainWindow::slotProcessResampling);
     connect(ui->btnFilter, &QPushButton::clicked, this, &MainWindow::slotProcessFiltering);
     connect(ui->radioGraphX, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
@@ -28,20 +29,64 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::slotSelectFile()
+void MainWindow::slotOpenRaw()
 {
     QString fileName = QFileDialog::getOpenFileName(this, "Open File",
                                                     "",
                                                     tr("Fichiers textes (*.txt);;Tous les fichiers (*)"));
+    if(!fileName.isEmpty()) {
+        _currentFileName = fileName;
+        _currentFileType = RAW;
+        updateFileInfo();
+        ui->mainForm->setEnabled(true);
+        _currentDataFile = DataFilePtr();
+        _currentHistogram = HistogramPtr();
+    }
+}
 
-    ui->txtFile->setEditText(fileName);
+void MainWindow::slotOpenResampled()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, "Open File",
+                                                    "",
+                                                    tr("Fichiers textes (*.txt);;Tous les fichiers (*)"));
+    if(!fileName.isEmpty()) {
+        _currentFileName = fileName;
+        _currentFileType = RESAMPLED;
+        updateFileInfo();
+        ui->mainForm->setEnabled(true);
+        _currentHistogram = HistogramPtr();
+
+        _currentDataFile = DataFile::openFile(_currentFileName);
+
+        if(_currentDataFile.isNull()) {
+            QMessageBox::critical(this, "Error", "An error occured while opening the file");
+            return;
+        }
+        SamplingAsker asker(this);
+        if(asker.exec() == QDialog::Accepted)
+            _currentDataFile->setSamplingRate(asker.getSamplingRate());
+        else
+            return;
 
 
+        ui->_graph->setDataFile(_currentDataFile);
+    }
+}
+
+void MainWindow::updateFileInfo() {
+    QString info = "Fichier ouvert : \"" + _currentFileName + "\"";
+
+    if(_currentFileType == RAW)
+        info += " (not resampled)";
+    else
+        info += " (resampled)";
+
+    ui->lblFileInfo->setText(info);
 }
 
 void MainWindow::slotProcessResampling() {
     Resampler r;
-    r.setFile(ui->txtFile->currentText());
+    r.setFile(_currentFileName);
     r.setEndDate(ui->txtDateEnd->date());
     r.setStartDate(ui->txtDateStart->date());
     r.setFrequency(ui->txtFreq->value());
@@ -51,7 +96,8 @@ void MainWindow::slotProcessResampling() {
 
     ui->_graph->setDataFile(_currentDataFile);
 
-    _currentDataFile->saveInFile(ui->txtFile->currentText() + ".resampled.txt");
+    _currentFileType = RESAMPLED;
+    updateFileInfo();
 }
 
 void MainWindow::slotUpdateGraphAxes() {
@@ -66,9 +112,15 @@ void MainWindow::slotSaveResampledFile() {
                                tr("Text (*.txt)"));
     _currentDataFile->saveInFile(filename);
 
+
 }
 
 void MainWindow::slotProcessFiltering() {
+    if(_currentFileType == RAW) {
+        QMessageBox::critical(this, "Error", "You must first resample the file");
+        return;
+    }
+
     FrequencyFilter filter;
     if(ui->radioX->isChecked())
         filter.setAxes(FrequencyFilter::X);
@@ -83,27 +135,26 @@ void MainWindow::slotProcessFiltering() {
 
     filter.setThreshold(ui->txtThreshold->value());
 
-    DataFilePtr df = filter.process();
+    _currentDataFile = filter.process();
 
-    ui->_graph->setDataFile(df);
-    df->saveInFile(ui->txtFile->currentText() + ".filtered.txt");
+    ui->_graph->setDataFile(_currentDataFile);
+    _currentDataFile->saveInFile(_currentFileName + ".filtered.txt");
 }
 
 
 void MainWindow::slotProcessHistogram() {
-    if(_currentDataFile.isNull())
-        _currentDataFile = DataFile::openFile(ui->txtFile->currentText());
-
-    SamplingAsker asker(this);
-    if(asker.exec() == QDialog::Accepted)
-        _currentDataFile->setSamplingRate(asker.getSamplingRate());
-    else
+    if(_currentFileType == RAW) {
+        QMessageBox::critical(this, "Error", "You must first resample the file");
         return;
+    }
+
+
+
 
     qDebug() << "Sampling rate : " << _currentDataFile->getSamplingRate();
 
-    std::cout << _currentDataFile->size() << std::endl;
-    std::cout << (*_currentDataFile) << std::endl;
+    //std::cout << _currentDataFile->size() << std::endl;
+    //std::cout << (*_currentDataFile) << std::endl;
 
     FrequencyFilter filter;
     /*if(ui->radioX->isChecked())
@@ -121,7 +172,7 @@ void MainWindow::slotProcessHistogram() {
 
     HistogramPtr histo = filter.getHistogram();
 
-    std::cout << (*histo) << std::endl;
+   // std::cout << (*histo) << std::endl;
 
     ui->_histogramGraph->setHistogram(histo);
 }
