@@ -395,7 +395,7 @@
             </widget>
             <widget class="QWidget" name="tab_3">
              <attribute name="title">
-              <string>Histogram</string>
+              <string>Spectrum</string>
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <item>
@@ -415,9 +415,9 @@
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="btnProcessHistogram">
+                  <widget class="QPushButton" name="btnProcessSpectrum">
                    <property name="text">
-                    <string>Compute Histogram</string>
+                    <string>Compute Spectrum</string>
                    </property>
                   </widget>
                  </item>
@@ -438,7 +438,7 @@
                </widget>
               </item>
               <item>
-               <widget class="HistogramGraph" name="_histogramGraph" native="true">
+               <widget class="SpectrumGraph" name="_spectrumGraph" native="true">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -505,9 +505,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>HistogramGraph</class>
+   <class>SpectrumGraph</class>
    <extends>QWidget</extends>
-   <header>histogramgraph.h</header>
+   <header>spectrumgraph.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

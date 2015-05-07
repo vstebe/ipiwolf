@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->radioGraphY, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
     connect(ui->radioGraphZ, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
     connect(ui->btnSaveResampled, &QPushButton::clicked, this, &MainWindow::slotSaveResampledFile);
-    connect(ui->btnProcessHistogram, &QPushButton::clicked, this, &MainWindow::slotProcessHistogram);
+    connect(ui->btnProcessSpectrum, &QPushButton::clicked, this, &MainWindow::slotProcessSpectrum);
 }
 
 MainWindow::~MainWindow()
@@ -40,7 +40,7 @@ void MainWindow::slotOpenRaw()
         updateFileInfo();
         ui->mainForm->setEnabled(true);
         _currentDataFile = DataFilePtr();
-        _currentHistogram = HistogramPtr();
+        _currentSpectrum = SpectrumPtr();
     }
 }
 
@@ -54,7 +54,7 @@ void MainWindow::slotOpenResampled()
         _currentFileType = RESAMPLED;
         updateFileInfo();
         ui->mainForm->setEnabled(true);
-        _currentHistogram = HistogramPtr();
+        _currentSpectrum = SpectrumPtr();
 
         _currentDataFile = DataFile::openFile(_currentFileName);
 
@@ -142,7 +142,7 @@ void MainWindow::slotProcessFiltering() {
 }
 
 
-void MainWindow::slotProcessHistogram() {
+void MainWindow::slotProcessSpectrum() {
     if(_currentFileType == RAW) {
         QMessageBox::critical(this, "Error", "You must first resample the file");
         return;
@@ -170,9 +170,9 @@ void MainWindow::slotProcessHistogram() {
 
     filter.setDatafile(_currentDataFile);
 
-    HistogramPtr histo = filter.getHistogram();
+    SpectrumPtr histo = filter.getSpectrum();
 
    // std::cout << (*histo) << std::endl;
 
-    ui->_histogramGraph->setHistogram(histo);
+    ui->_spectrumGraph->setSpectrum(histo);
 }

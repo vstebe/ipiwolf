@@ -4,17 +4,17 @@
 #include <QVector>
 #include <QSharedPointer>
 #include <fftw3.h>
-struct HistogramPoint {
+struct SpectrumPoint {
     double frequency;
     double amplitude;
 };
 
-class Histogram {
+class Spectrum {
 public:
-    Histogram(fftw_complex * tab, int size, int samplingRate);
-    ~Histogram();
+    Spectrum(fftw_complex * tab, int size, int samplingRate);
+    ~Spectrum();
 
-    const QVector<HistogramPoint>& getEasyTab() const;
+    const QVector<SpectrumPoint>& getEasyTab() const;
     void updateEasyTab();
 
     fftw_complex * getTab();
@@ -26,12 +26,12 @@ protected:
     fftw_complex * _tab;
     int _size;
     int _samplingRate;
-    QVector<HistogramPoint> _easyTab;
+    QVector<SpectrumPoint> _easyTab;
 };
 
-typedef QSharedPointer<Histogram> HistogramPtr;
+typedef QSharedPointer<Spectrum> SpectrumPtr;
 
-std::ostream& operator << (std::ostream& O, const Histogram& d);
+std::ostream& operator << (std::ostream& O, const Spectrum& d);
 
 
 #endif // HISTOGRAM_H
