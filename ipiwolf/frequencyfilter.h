@@ -4,7 +4,7 @@
 #include <QSharedPointer>
 
 #include "datafile.h"
-#include "histogram.h"
+#include "spectrum.h"
 
 class FrequencyFilter
 {
@@ -15,7 +15,7 @@ public:
     void setDatafile(DataFilePtr dataFile);
     void setThreshold(int threshold);
     void setAxes(Axe axes);
-    HistogramPtr getHistogram();
+    SpectrumPtr getSpectrum();
     DataFilePtr process();
     ~FrequencyFilter();
 

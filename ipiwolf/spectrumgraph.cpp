@@ -1,6 +1,6 @@
-#include "histogramgraph.h"
+#include "spectrumgraph.h"
 
-HistogramGraph::HistogramGraph(QWidget *parent) : QCustomPlot(parent)
+SpectrumGraph::SpectrumGraph(QWidget *parent) : QCustomPlot(parent)
 {
     xAxis->setTickLabelRotation(60);
     xAxis->setSubTickCount(0);
@@ -35,7 +35,7 @@ HistogramGraph::HistogramGraph(QWidget *parent) : QCustomPlot(parent)
 
 }
 
-void HistogramGraph::setHistogram(HistogramPtr histo) {
+void SpectrumGraph::setSpectrum(SpectrumPtr histo) {
     clearGraphs();
 
     addGraph();
@@ -53,7 +53,7 @@ void HistogramGraph::setHistogram(HistogramPtr histo) {
     graph()->setData(ticks, data);
 }
 
-HistogramGraph::~HistogramGraph()
+SpectrumGraph::~SpectrumGraph()
 {
 
 }

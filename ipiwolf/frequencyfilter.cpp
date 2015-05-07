@@ -25,10 +25,10 @@ void FrequencyFilter::setAxes(Axe axe) {
     _axe = axe;
 }
 
-HistogramPtr FrequencyFilter::getHistogram() {
+SpectrumPtr FrequencyFilter::getSpectrum() {
     if(!_dataFile) {
         qDebug() << "datafile nul";
-        return HistogramPtr();
+        return SpectrumPtr();
     }
 
     fftw_complex *out1;
@@ -65,7 +65,7 @@ HistogramPtr FrequencyFilter::getHistogram() {
 
     fftw_execute(p);
 
-    HistogramPtr res(new Histogram(out1, _dataFile->size(), _dataFile->getSamplingRate()));
+    SpectrumPtr res(new Spectrum(out1, _dataFile->size(), _dataFile->getSamplingRate()));
 
 
     fftw_free(amplitude);
@@ -117,7 +117,7 @@ DataFilePtr FrequencyFilter::process() {
 
     return output;*/
 
-    HistogramPtr histo = getHistogram();
+    SpectrumPtr histo = getSpectrum();
 
     fftw_complex * n = histo->getTab();
     double *output = (double *)fftw_malloc((histo->getSize())*sizeof(double));

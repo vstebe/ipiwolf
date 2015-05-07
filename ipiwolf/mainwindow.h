@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "datafile.h"
-#include "histogram.h"
+#include "spectrum.h"
 
 namespace Ui {
 class MainWindow;
@@ -26,7 +26,7 @@ public slots:
     void slotProcessFiltering();
     void slotUpdateGraphAxes();
     void slotSaveResampledFile();
-    void slotProcessHistogram();
+    void slotProcessSpectrum();
 
 protected:
     void updateFileInfo();
@@ -34,7 +34,7 @@ protected:
 private:
     Ui::MainWindow *ui;
     DataFilePtr _currentDataFile;
-    HistogramPtr _currentHistogram;
+    SpectrumPtr _currentSpectrum;
     QString _currentFileName;
     FileType _currentFileType;
 };

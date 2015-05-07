@@ -20,10 +20,10 @@ SOURCES += main.cpp\
         qcustomplot.cpp \
     graph.cpp \
     frequencyfilter.cpp \
-    histogramgraph.cpp \
     samplingasker.cpp \
-    histogram.cpp \
-    resamplerdialog.cpp
+    resamplerdialog.cpp \
+    spectrum.cpp \
+    spectrumgraph.cpp
 
 HEADERS  += mainwindow.h\
         point.h\
@@ -32,10 +32,11 @@ HEADERS  += mainwindow.h\
         qcustomplot.h \
         graph.h \
     frequencyfilter.h \
-    histogramgraph.h \
-    histogram.h \
     samplingasker.h \
-    resamplerdialog.h
+    resamplerdialog.h \
+    spectrumgraph.h \
+    spectrum.h \
+    samplingasker.h
 
 FORMS    += mainwindow.ui \
     samplingasker.ui \
