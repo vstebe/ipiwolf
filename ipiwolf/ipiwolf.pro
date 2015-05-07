@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     frequencyfilter.cpp \
     histogramgraph.cpp \
     samplingasker.cpp \
-    histogram.cpp
+    histogram.cpp \
+    resamplerdialog.cpp
 
 HEADERS  += mainwindow.h\
         point.h\
@@ -33,10 +34,12 @@ HEADERS  += mainwindow.h\
     frequencyfilter.h \
     histogramgraph.h \
     histogram.h \
-    samplingasker.h
+    samplingasker.h \
+    resamplerdialog.h
 
 FORMS    += mainwindow.ui \
-    samplingasker.ui
+    samplingasker.ui \
+    resamplerdialog.ui
 
 RESOURCES += \
     resources.qrc
