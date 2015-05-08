@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->radioGraphX, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
     connect(ui->radioGraphY, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
     connect(ui->radioGraphZ, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
+    connect(ui->radioGraphXYZ, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
     connect(ui->btnSaveResampled, &QPushButton::clicked, this, &MainWindow::slotSaveResampledFile);
     connect(ui->btnProcessSpectrum, &QPushButton::clicked, this, &MainWindow::slotProcessSpectrum);
 }
@@ -101,7 +102,7 @@ void MainWindow::slotProcessResampling() {
 }
 
 void MainWindow::slotUpdateGraphAxes() {
-    ui->_graph->setAxes(ui->radioGraphX->isChecked(), ui->radioGraphY->isChecked(), ui->radioGraphZ->isChecked());
+    ui->_graph->setAxes(ui->radioGraphX->isChecked(), ui->radioGraphY->isChecked(), ui->radioGraphZ->isChecked(), ui->radioGraphXYZ);
     ui->_graph->update();
 }
 
@@ -147,32 +148,12 @@ void MainWindow::slotProcessSpectrum() {
         QMessageBox::critical(this, "Error", "You must first resample the file");
         return;
     }
-
-
-
-
-    qDebug() << "Sampling rate : " << _currentDataFile->getSamplingRate();
-
-    //std::cout << _currentDataFile->size() << std::endl;
-    //std::cout << (*_currentDataFile) << std::endl;
-
     FrequencyFilter filter;
-    /*if(ui->radioX->isChecked())
-        filter.setAxes(FrequencyFilter::X);
-    else if(ui->radioY->isChecked())
-        filter.setAxes(FrequencyFilter::Y);
-    else if(ui->radioZ->isChecked())
-        filter.setAxes(FrequencyFilter::Z);
-    else
-        filter.setAxes(FrequencyFilter::XYZ);*/
-
-     filter.setAxes(FrequencyFilter::X);
-
     filter.setDatafile(_currentDataFile);
 
-    SpectrumPtr histo = filter.getSpectrum();
+    MultiSpectrum histo = filter.getSpectrum(ui->radioSpectrumGraphX->isChecked(), ui->radioSpectrumGraphY->isChecked(), ui->radioSpectrumGraphZ->isChecked(), ui->radioSpectrumGraphXYZ->isChecked());
 
-   // std::cout << (*histo) << std::endl;
+    std::cout << (*(histo.y)) << std::endl;
 
     ui->_spectrumGraph->setSpectrum(histo);
 }

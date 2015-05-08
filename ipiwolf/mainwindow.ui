@@ -87,7 +87,7 @@
     <item>
      <widget class="QWidget" name="mainForm" native="true">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
@@ -99,7 +99,7 @@
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="Resampling">
           <attribute name="title">
@@ -309,58 +309,103 @@
              <item row="0" column="0">
               <widget class="QLabel" name="label_5">
                <property name="text">
-                <string>Seuil :</string>
+                <string>Threshold :</string>
                </property>
               </widget>
              </item>
              <item row="0" column="1">
               <widget class="QSpinBox" name="txtThreshold">
+               <property name="suffix">
+                <string> Hz</string>
+               </property>
                <property name="maximum">
                 <number>10000</number>
                </property>
               </widget>
              </item>
              <item row="1" column="0">
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>Direction :</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QWidget" name="widget_11" native="true">
+               <layout class="QVBoxLayout" name="verticalLayout_7">
+                <item>
+                 <widget class="QRadioButton" name="radioLow">
+                  <property name="text">
+                   <string>&amp;Low</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QRadioButton" name="radioHigh">
+                  <property name="text">
+                   <string>&amp;High</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="2" column="0">
               <widget class="QLabel" name="label_6">
                <property name="text">
                 <string>Axes :</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QRadioButton" name="radioX">
-               <property name="text">
-                <string>&amp;X</string>
-               </property>
-              </widget>
-             </item>
              <item row="2" column="1">
-              <widget class="QRadioButton" name="radioY">
-               <property name="text">
-                <string>&amp;Y</string>
-               </property>
+              <widget class="QWidget" name="widget_12" native="true">
+               <layout class="QVBoxLayout" name="verticalLayout_8">
+                <item>
+                 <widget class="QRadioButton" name="radioX">
+                  <property name="text">
+                   <string>&amp;X</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QRadioButton" name="radioY">
+                  <property name="text">
+                   <string>&amp;Y</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QRadioButton" name="radioZ">
+                  <property name="text">
+                   <string>&amp;Z</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QRadioButton" name="radioXYZ">
+                  <property name="text">
+                   <string>XY&amp;Z</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnFilter">
+                  <property name="text">
+                   <string>Filtrer</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QRadioButton" name="radioZ">
-               <property name="text">
-                <string>&amp;Z</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QRadioButton" name="radioXYZ">
-               <property name="text">
-                <string>XYZ</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
-              <widget class="QPushButton" name="btnFilter">
-               <property name="text">
-                <string>Filtrer</string>
-               </property>
-              </widget>
+              <widget class="QWidget" name="widget_13" native="true"/>
              </item>
             </layout>
            </item>
@@ -389,6 +434,49 @@
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="widget_5" native="true">
+                <layout class="QHBoxLayout" name="horizontalLayout_3">
+                 <item>
+                  <widget class="QCheckBox" name="radioGraphX">
+                   <property name="text">
+                    <string>X</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="radioGraphY">
+                   <property name="text">
+                    <string>Y</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="radioGraphZ">
+                   <property name="text">
+                    <string>Z</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="radioGraphXYZ">
+                   <property name="text">
+                    <string>XYZ</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
              </layout>
@@ -439,6 +527,9 @@
               </item>
               <item>
                <widget class="SpectrumGraph" name="_spectrumGraph" native="true">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
@@ -447,44 +538,54 @@
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QWidget" name="widget_10" native="true">
+                <layout class="QHBoxLayout" name="horizontalLayout_9">
+                 <item>
+                  <widget class="QCheckBox" name="radioSpectrumGraphX">
+                   <property name="text">
+                    <string>X</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="radioSpectrumGraphY">
+                   <property name="text">
+                    <string>Y</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="radioSpectrumGraphZ">
+                   <property name="text">
+                    <string>Z</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                   <property name="tristate">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="radioSpectrumGraphXYZ">
+                   <property name="text">
+                    <string>XYZ</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
              </layout>
             </widget>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" name="widget_5" native="true">
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <widget class="QCheckBox" name="radioGraphX">
-               <property name="text">
-                <string>X</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="radioGraphY">
-               <property name="text">
-                <string>Y</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="radioGraphZ">
-               <property name="text">
-                <string>Z</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
            </widget>
           </item>
          </layout>

@@ -29,7 +29,16 @@ protected:
     QVector<SpectrumPoint> _easyTab;
 };
 
+
+
 typedef QSharedPointer<Spectrum> SpectrumPtr;
+
+struct MultiSpectrum {
+    SpectrumPtr x;
+    SpectrumPtr y;
+    SpectrumPtr z;
+    SpectrumPtr xyz;
+};
 
 std::ostream& operator << (std::ostream& O, const Spectrum& d);
 

@@ -35,22 +35,81 @@ SpectrumGraph::SpectrumGraph(QWidget *parent) : QCustomPlot(parent)
 
 }
 
-void SpectrumGraph::setSpectrum(SpectrumPtr histo) {
+void SpectrumGraph::setSpectrum(MultiSpectrum mhisto) {
     clearGraphs();
 
-    addGraph();
+    if(!mhisto.x.isNull()) {
+        SpectrumPtr histo = mhisto.x;
 
-    graph()->setPen(QPen(Qt::blue)); // line color blue for first graph
-    graph()->setAntialiasedFill(false);
-    graph()->setLineStyle(QCPGraph::lsStepCenter);
+        addGraph();
 
-    QVector<double> ticks(histo->getEasyTab().size());
-    QVector<double> data(histo->getEasyTab().size());
-    for(int i=0; i<histo->getEasyTab().size(); i++) {
-        ticks[i] = histo->getEasyTab()[i].frequency;
-        data[i] = histo->getEasyTab()[i].amplitude;
+        graph()->setPen(QPen(Qt::blue)); // line color blue for first graph
+        graph()->setAntialiasedFill(false);
+        graph()->setLineStyle(QCPGraph::lsStepCenter);
+        graph()->setName("X");
+
+        QVector<double> ticks(histo->getEasyTab().size());
+        QVector<double> data(histo->getEasyTab().size());
+        for(int i=0; i<histo->getEasyTab().size(); i++) {
+            ticks[i] = histo->getEasyTab()[i].frequency;
+            data[i] = histo->getEasyTab()[i].amplitude;
+        }
+        graph()->setData(ticks, data);
     }
-    graph()->setData(ticks, data);
+
+    if(!mhisto.y.isNull()) {
+        SpectrumPtr histo = mhisto.y;
+        addGraph();
+
+        graph()->setPen(QPen(Qt::green)); // line color blue for first graph
+        graph()->setAntialiasedFill(false);
+        graph()->setLineStyle(QCPGraph::lsStepCenter);
+        graph()->setName("Y");
+
+        QVector<double> ticks(histo->getEasyTab().size());
+        QVector<double> data(histo->getEasyTab().size());
+        for(int i=0; i<histo->getEasyTab().size(); i++) {
+            ticks[i] = histo->getEasyTab()[i].frequency;
+            data[i] = histo->getEasyTab()[i].amplitude;
+        }
+        graph()->setData(ticks, data);
+    }
+
+    if(!mhisto.z.isNull()) {
+        SpectrumPtr histo = mhisto.z;
+        addGraph();
+
+        graph()->setPen(QPen(Qt::yellow)); // line color blue for first graph
+        graph()->setAntialiasedFill(false);
+        graph()->setLineStyle(QCPGraph::lsStepCenter);
+        graph()->setName("Z");
+
+        QVector<double> ticks(histo->getEasyTab().size());
+        QVector<double> data(histo->getEasyTab().size());
+        for(int i=0; i<histo->getEasyTab().size(); i++) {
+            ticks[i] = histo->getEasyTab()[i].frequency;
+            data[i] = histo->getEasyTab()[i].amplitude;
+        }
+        graph()->setData(ticks, data);
+    }
+
+    if(!mhisto.xyz.isNull()) {
+        SpectrumPtr histo = mhisto.xyz;
+        addGraph();
+
+        graph()->setPen(QPen(Qt::red)); // line color blue for first graph
+        graph()->setAntialiasedFill(false);
+        graph()->setLineStyle(QCPGraph::lsStepCenter);
+        graph()->setName("XYZ");
+
+        QVector<double> ticks(histo->getEasyTab().size());
+        QVector<double> data(histo->getEasyTab().size());
+        for(int i=0; i<histo->getEasyTab().size(); i++) {
+            ticks[i] = histo->getEasyTab()[i].frequency;
+            data[i] = histo->getEasyTab()[i].amplitude;
+        }
+        graph()->setData(ticks, data);
+    }
 }
 
 SpectrumGraph::~SpectrumGraph()

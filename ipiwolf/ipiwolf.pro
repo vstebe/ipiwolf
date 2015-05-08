@@ -11,6 +11,7 @@ TEMPLATE = app
 
 LIBS += -lfftw3
 
+CONFIG += c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp\

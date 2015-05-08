@@ -25,7 +25,7 @@ void FrequencyFilter::setAxes(Axe axe) {
     _axe = axe;
 }
 
-SpectrumPtr FrequencyFilter::getSpectrum() {
+SpectrumPtr FrequencyFilter::getSpectrum(std::function<double (DataFilePtr, int)> f) {
     if(!_dataFile) {
         qDebug() << "datafile nul";
         return SpectrumPtr();
@@ -40,24 +40,9 @@ SpectrumPtr FrequencyFilter::getSpectrum() {
 
 
     out1 = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * (_dataFile->size())); // basses freq nulles
-    //out2 = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * (_dataFile->size())); // hautes freq nulles
 
-    switch (_axe) {
-        case X:
-            for(k=0;k<_dataFile->size();k++) amplitude[k]= (*_dataFile)[k].x;
-            break;
-        case Y:
-            for(k=0;k<_dataFile->size();k++) amplitude[k]= (*_dataFile)[k].y;
-            break;
-        case Z:
-            for(k=0;k<_dataFile->size();k++) amplitude[k]= (*_dataFile)[k].z;
-            break;
-        case XYZ:
-            for(k=0;k<_dataFile->size();k++) amplitude[k]= sqrt((*_dataFile)[k].x*(*_dataFile)[k].x+(*_dataFile)[k].y*(*_dataFile)[k].y+(*_dataFile)[k].z*(*_dataFile)[k].z);
-            break;
-        default:
-            break;
-    }
+
+    for(k=0;k<_dataFile->size();k++) amplitude[k]= f(_dataFile,k);
 
     p = fftw_plan_dft_r2c_1d(_dataFile->size(), amplitude, out1, FFTW_ESTIMATE);
 
@@ -73,6 +58,34 @@ SpectrumPtr FrequencyFilter::getSpectrum() {
     fftw_cleanup();
 
     return res;
+}
+
+MultiSpectrum FrequencyFilter::getSpectrum(bool x, bool y, bool z, bool xyz) {
+    MultiSpectrum res;
+    if(x)
+        res.x = getSpectrum(X);
+    if(y)
+        res.y = getSpectrum(Y);
+    if(z)
+        res.z = getSpectrum(Z);
+    if(xyz)
+        res.xyz = getSpectrum(XYZ);
+    return res;
+}
+
+SpectrumPtr FrequencyFilter::getSpectrum(Axe axe) {
+    if(axe == X) {
+        return getSpectrum([](DataFilePtr df, int k) { return df->at(k).x; });
+    }
+    else if(axe == Y) {
+        return getSpectrum([](DataFilePtr df, int k) { return df->at(k).y; });
+    }
+    else if(axe == Z) {
+        return getSpectrum([](DataFilePtr df, int k) { return df->at(k).z; });
+    }
+    else {
+        return getSpectrum([](DataFilePtr df, int k) { return sqrt(df->at(k).x*df->at(k).x + df->at(k).y*df->at(k).y + df->at(k).z*df->at(k).y); });
+    }
 }
 
 DataFilePtr FrequencyFilter::process() {
@@ -117,7 +130,8 @@ DataFilePtr FrequencyFilter::process() {
 
     return output;*/
 
-    SpectrumPtr histo = getSpectrum();
+
+    SpectrumPtr histo = getSpectrum(_axe);
 
     fftw_complex * n = histo->getTab();
     double *output = (double *)fftw_malloc((histo->getSize())*sizeof(double));

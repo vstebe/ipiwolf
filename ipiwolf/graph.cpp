@@ -90,13 +90,29 @@ void Graph::update() {
         graph->rescaleAxes();
     }
 
+    if(_axeXYZ) {
+
+        QVector<double> y(_dataFile->size());
+        for(int i=0; i<x.size(); i++) {
+            double px =  _dataFile->at(i).x;
+            double py =  _dataFile->at(i).y;
+            double pz =  _dataFile->at(i).z;
+            y[i] = sqrt(px*px + py*py + pz*pz);
+        }
+        QCPGraph * graph = addGraph();
+        graph->setData(x, y);
+        graph->setPen(QPen(Qt::yellow)); // line color blue for first graph
+        graph->rescaleAxes();
+    }
+
     QCustomPlot::update();
 }
 
 
-void Graph::setAxes(bool axeX, bool axeY, bool axeZ) {
+void Graph::setAxes(bool axeX, bool axeY, bool axeZ, bool axeXYZ) {
     _axeX = axeX;
     _axeY = axeY;
     _axeZ = axeZ;
+    _axeXYZ = axeXYZ;
     update();
 }

@@ -8,7 +8,8 @@ class SpectrumGraph : public QCustomPlot
 {
 public:
     SpectrumGraph(QWidget * parent = NULL);
-    void setSpectrum(SpectrumPtr histo);
+    void setSpectrum(MultiSpectrum mhisto);
+
     ~SpectrumGraph();
 };
 
