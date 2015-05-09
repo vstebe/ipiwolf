@@ -135,8 +135,9 @@ void MainWindow::slotProcessFiltering() {
     filter.setDatafile(_currentDataFile);
 
     filter.setThreshold(ui->txtThreshold->value());
+    filter.setDirection(ui->radioLow->isChecked() ? FrequencyFilter::LOW : FrequencyFilter::HIGH);
 
-    _currentDataFile = filter.process();
+    filter.process();
 
     ui->_graph->setDataFile(_currentDataFile);
     _currentDataFile->saveInFile(_currentFileName + ".filtered.txt");

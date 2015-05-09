@@ -12,13 +12,15 @@ class FrequencyFilter
 {
 public:
     enum Axe {X, Y, Z, XYZ};
+    enum Direction {LOW, HIGH};
 
     FrequencyFilter();
     void setDatafile(DataFilePtr dataFile);
     void setThreshold(int threshold);
     void setAxes(Axe axes);
+    void setDirection(Direction d);
     MultiSpectrum getSpectrum(bool x, bool y, bool z, bool xyz);
-    DataFilePtr process();
+    void process();
     ~FrequencyFilter();
 
 protected:
@@ -27,6 +29,7 @@ protected:
 
     DataFilePtr _dataFile;
     Axe _axe;
+    Direction _direction;
     int _threshold;
 };
 

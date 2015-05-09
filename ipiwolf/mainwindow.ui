@@ -487,45 +487,6 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <item>
-               <widget class="QWidget" name="widget_8" native="true">
-                <layout class="QHBoxLayout" name="horizontalLayout_6">
-                 <item>
-                  <spacer name="horizontalSpacer_5">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>280</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="btnProcessSpectrum">
-                   <property name="text">
-                    <string>Compute Spectrum</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_6">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>280</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item>
                <widget class="SpectrumGraph" name="_spectrumGraph" native="true">
                 <property name="enabled">
                  <bool>true</bool>
@@ -578,6 +539,13 @@
                   <widget class="QCheckBox" name="radioSpectrumGraphXYZ">
                    <property name="text">
                     <string>XYZ</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="btnProcessSpectrum">
+                   <property name="text">
+                    <string>Compute Spectrum</string>
                    </property>
                   </widget>
                  </item>

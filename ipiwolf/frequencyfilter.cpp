@@ -25,6 +25,10 @@ void FrequencyFilter::setAxes(Axe axe) {
     _axe = axe;
 }
 
+void FrequencyFilter::setDirection(Direction d) {
+    _direction = d;
+}
+
 SpectrumPtr FrequencyFilter::getSpectrum(std::function<double (DataFilePtr, int)> f) {
     if(!_dataFile) {
         qDebug() << "datafile nul";
@@ -88,7 +92,7 @@ SpectrumPtr FrequencyFilter::getSpectrum(Axe axe) {
     }
 }
 
-DataFilePtr FrequencyFilter::process() {
+void FrequencyFilter::process() {
 /*
 
     memcpy(out2, out1, _dataFile->size()*sizeof(fftw_complex));
@@ -137,10 +141,11 @@ DataFilePtr FrequencyFilter::process() {
     double *output = (double *)fftw_malloc((histo->getSize())*sizeof(double));
 
     int start = (_dataFile->size() * _threshold)/_dataFile->getSamplingRate();
-    int end = _dataFile->size() - start;
+
+
 
     for(int i=0; i<histo->getSize(); i++) {
-        if(i>start && i<end) {
+        if((i>start && _direction == LOW) || (i<= start && _direction == HIGH)) {
             n[i][0] = histo->getTab()[i][0];
             n[i][1] = histo->getTab()[i][1];
          } else {
@@ -153,21 +158,19 @@ DataFilePtr FrequencyFilter::process() {
 
     fftw_execute(q);
 
-    DataFilePtr newDataFile(new DataFile(_dataFile->size()));
-    newDataFile->setSamplingRate(_dataFile->getSamplingRate());
-    for(int i=0; i<_dataFile->size(); i++) {
-        (*newDataFile)[i] = Point(output[i]/_dataFile->size(),0,0);
+    if(_axe == X) {
+        for(int i=0; i<_dataFile->size(); i++)
+            (*_dataFile)[i].x = output[i]/_dataFile->size();
+    } else if(_axe == Y) {
+        for(int i=0; i<_dataFile->size(); i++)
+            (*_dataFile)[i].y = output[i]/_dataFile->size();
+    } else if(_axe == Z) {
+        for(int i=0; i<_dataFile->size(); i++)
+            (*_dataFile)[i].z = output[i]/_dataFile->size();
     }
+
 
     fftw_destroy_plan(q);
 
-    histo->updateEasyTab();
 
-    std::cout << (*histo) << std::endl;
-
-    std::cout << "start : " << start << std::endl;
-    std::cout << "end : " << end << std::endl;
-    std::cout << "size : " << _dataFile->size() << std::endl;
-
-     return newDataFile;
 }
