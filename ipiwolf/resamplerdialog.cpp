@@ -9,6 +9,7 @@ ResamplerDialog::ResamplerDialog(QWidget *parent) :
     _rs = new Resampler();
     _rs->moveToThread(&_dateThread);
     this->connect(_rs, &Resampler::dateChanged, this, &ResamplerDialog::changeDate);
+    this->connect(&_dateThread, &QThread::finished, this, &ResamplerDialog::accepted);
 }
 
 ResamplerDialog::~ResamplerDialog()
