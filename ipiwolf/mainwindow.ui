@@ -106,7 +106,7 @@
     <item>
      <widget class="QWidget" name="mainForm" native="true">
       <property name="enabled">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
@@ -118,7 +118,7 @@
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="Resampling">
           <attribute name="title">
@@ -205,22 +205,6 @@
            </item>
            <item>
             <widget class="QWidget" name="widget_2" native="true"/>
-           </item>
-           <item>
-            <widget class="QProgressBar" name="progressBar">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="minimum">
-              <number>0</number>
-             </property>
-             <property name="maximum">
-              <number>100</number>
-             </property>
-             <property name="value">
-              <number>0</number>
-             </property>
-            </widget>
            </item>
            <item>
             <widget class="QWidget" name="widget_6" native="true">
@@ -508,7 +492,7 @@
               <item>
                <widget class="SpectrumGraph" name="_spectrumGraph" native="true">
                 <property name="enabled">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
