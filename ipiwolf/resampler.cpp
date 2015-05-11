@@ -65,12 +65,11 @@ void Resampler::setFrequency (int freq)
 * \brief Resample the file with the _newFrequency
 * \return a formatted Datafile of the sample, between the two dates given and at the new Frequency
 */
-DataFilePtr Resampler::resample()
+void Resampler::resample()
 {
     if(!_file.open(QIODevice::ReadOnly))
     {
         std::cout << "Impossible d'ouvrir le fichier !" << std::endl;
-        return DataFilePtr();
     }
 
     DataFilePtr final(new DataFile());
@@ -116,7 +115,13 @@ DataFilePtr Resampler::resample()
     _file.close();
 
     final->setSamplingRate(_newFrequency);
-    return final;
+
+    _result = final;
+    emit finished();
+}
+
+DataFilePtr Resampler::getResult() {
+    return _result;
 }
 
 Point Resampler::calcCoord(Point a, float timePa, Point b, float timePb, float timeNewPoint)

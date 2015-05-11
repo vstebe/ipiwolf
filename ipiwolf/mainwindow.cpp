@@ -3,7 +3,7 @@
 
 #include <QFileDialog>
 
-#include "resampler.h"
+#include "resamplerdialog.h"
 #include "frequencyfilter.h"
 #include "samplingasker.h"
 
@@ -92,19 +92,25 @@ void MainWindow::updateFileInfo() {
 }
 
 void MainWindow::slotProcessResampling() {
-    Resampler r;
-    r.setFile(_currentFileName);
-    r.setEndDate(ui->txtDateEnd->date());
-    r.setStartDate(ui->txtDateStart->date());
-    r.setFrequency(ui->txtFreq->value());
+    ResamplerDialog rd;
+    rd.getResampler()->setFile(_currentFileName);
+    rd.getResampler()->setEndDate(ui->txtDateEnd->date());
+    rd.getResampler()->setStartDate(ui->txtDateStart->date());
+    rd.getResampler()->setFrequency(ui->txtFreq->value());
 
-    _currentDataFile = r.resample();
+    rd.startResampling();
+
+    DataFilePtr result = rd.getResampler()->getResult();
+
+    if(!result.isNull()) {
+        _currentDataFile = result;
+        ui->_graph->setDataFile(_currentDataFile);
+
+        _currentFileType = RESAMPLED;
+        updateFileInfo();
+    }
 
 
-    ui->_graph->setDataFile(_currentDataFile);
-
-    _currentFileType = RESAMPLED;
-    updateFileInfo();
 }
 
 void MainWindow::slotUpdateGraphAxes() {

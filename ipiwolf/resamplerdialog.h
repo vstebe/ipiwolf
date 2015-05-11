@@ -21,6 +21,7 @@ public:
     Resampler* getResampler();
     void startResampling();
 
+
 private:
     Ui::ResamplerDialog *ui;
     QThread _thread;
@@ -28,6 +29,7 @@ private:
 
 public slots:
     void changeDate(QDate date);
+    void finished();
 };
 
 #endif // RESAMPLERDIALOG_H

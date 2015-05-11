@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "resamplerdialog.h"
 #include "ui_resamplerdialog.h"
 
@@ -8,8 +10,10 @@ ResamplerDialog::ResamplerDialog(QWidget *parent) :
     ui->setupUi(this);
     _rs = new Resampler();
     _rs->moveToThread(&_dateThread);
-    this->connect(_rs, &Resampler::dateChanged, this, &ResamplerDialog::changeDate);
-    this->connect(&_dateThread, &QThread::finished, this, &ResamplerDialog::accepted);
+    connect(_rs, &Resampler::dateChanged, this, &ResamplerDialog::changeDate);
+    connect(_rs, &Resampler::finished, this, &ResamplerDialog::finished);
+    connect(&_dateThread, &QThread::started, _rs, &Resampler::resample);
+
 }
 
 ResamplerDialog::~ResamplerDialog()
@@ -29,5 +33,14 @@ Resampler * ResamplerDialog::getResampler()
 
 void ResamplerDialog::startResampling()
 {
-        _dateThread.start();
+    _dateThread.start();
+    exec();
+}
+
+
+void ResamplerDialog::finished() {
+    qDebug() << "finished";
+    _dateThread.quit();
+    _dateThread.wait();
+    accept();
 }
