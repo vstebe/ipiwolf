@@ -63,12 +63,18 @@ void MainWindow::slotOpenResampled()
             QMessageBox::critical(this, "Error", "An error occured while opening the file");
             return;
         }
-        SamplingAsker asker(this);
-        if(asker.exec() == QDialog::Accepted)
-            _currentDataFile->setSamplingRate(asker.getSamplingRate());
-        else
-            return;
 
+        QRegExp exp(".+([0-9]+)Hz.+");
+        if(exp.indexIn(_currentFileName) >= 0) {
+            _currentDataFile->setSamplingRate(exp.cap(1).toInt());
+            qDebug() << _currentDataFile->getSamplingRate() << "  " << exp.cap(0);
+        } else {
+            SamplingAsker asker(this);
+            if(asker.exec() == QDialog::Accepted)
+                _currentDataFile->setSamplingRate(asker.getSamplingRate());
+            else
+                return;
+        }
 
         ui->_graph->setDataFile(_currentDataFile);
     }
@@ -109,7 +115,9 @@ void MainWindow::slotUpdateGraphAxes() {
 void MainWindow::slotSaveResampledFile() {
     if(_currentDataFile.isNull()) return;
 
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save File"),
+    QFileInfo fi(_currentFileName);
+
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save File"),fi.absolutePath() + fi.completeBaseName() + "." + QString::number(_currentDataFile->getSamplingRate()) + "Hz.txt",
                                tr("Text (*.txt)"));
     _currentDataFile->saveInFile(filename);
 
@@ -155,4 +163,5 @@ void MainWindow::slotProcessSpectrum() {
     MultiSpectrum histo = filter.getSpectrum(ui->radioSpectrumGraphX->isChecked(), ui->radioSpectrumGraphY->isChecked(), ui->radioSpectrumGraphZ->isChecked(), ui->radioSpectrumGraphXYZ->isChecked());
 
     ui->_spectrumGraph->setSpectrum(histo);
+    ui->_spectrumGraph->replot();
 }
