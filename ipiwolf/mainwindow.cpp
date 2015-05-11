@@ -94,8 +94,8 @@ void MainWindow::updateFileInfo() {
 void MainWindow::slotProcessResampling() {
     ResamplerDialog rd;
     rd.getResampler()->setFile(_currentFileName);
-    rd.getResampler()->setEndDate(ui->txtDateEnd->date());
-    rd.getResampler()->setStartDate(ui->txtDateStart->date());
+    rd.getResampler()->setEndDate(ui->txtDateEnd->dateTime());
+    rd.getResampler()->setStartDate(ui->txtDateStart->dateTime());
     rd.getResampler()->setFrequency(ui->txtFreq->value());
 
     rd.startResampling();

@@ -4,7 +4,7 @@
 #include <QDate>
 #include <QFile>
 #include <QVector>
-#include <QDate>
+#include <QDateTime>
 #include <QTextStream>
 #include "datafile.h"
 #include "point.h"
@@ -18,8 +18,8 @@ public:
     Resampler(QString filename);
     void setFile (QString filename);
     void setFrequency (int freq);
-    void setStartDate(QDate startDate);
-    void setEndDate(QDate endDate);
+    void setStartDate(QDateTime startDate);
+    void setEndDate(QDateTime endDate);
     void resample();
     Point calcCoord(Point a, float timePa, Point b, float timePb, float timeNewPoint);
     float coeffDirect(float a, float timePa, float b, float timePb);
@@ -28,12 +28,12 @@ public:
     DataFilePtr getResult();
 
 signals:
-    void dateChanged(QDate date);
+    void dateChanged(QDateTime date);
     void finished();
 
 private:
-    QDate _startDate;
-    QDate _endDate;
+    QDateTime _startDate;
+    QDateTime _endDate;
     QFile _file;
     int _newFrequency;
     DataFilePtr _result;
