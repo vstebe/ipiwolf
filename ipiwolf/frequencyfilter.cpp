@@ -17,7 +17,7 @@ void FrequencyFilter::setDatafile(DataFilePtr dataFile) {
     _dataFile = dataFile;
 }
 
-void FrequencyFilter::setThreshold(int threshold) {
+void FrequencyFilter::setThreshold(double threshold) {
     _threshold = threshold;
 }
 

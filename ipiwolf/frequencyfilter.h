@@ -16,7 +16,7 @@ public:
 
     FrequencyFilter();
     void setDatafile(DataFilePtr dataFile);
-    void setThreshold(int threshold);
+    void setThreshold(double threshold);
     void setAxes(Axe axes);
     void setDirection(Direction d);
     MultiSpectrum getSpectrum(bool x, bool y, bool z, bool xyz);
@@ -30,7 +30,7 @@ protected:
     DataFilePtr _dataFile;
     Axe _axe;
     Direction _direction;
-    int _threshold;
+    double _threshold;
 };
 
 

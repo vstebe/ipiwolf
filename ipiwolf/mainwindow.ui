@@ -332,16 +332,6 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QSpinBox" name="txtThreshold">
-               <property name="suffix">
-                <string> Hz</string>
-               </property>
-               <property name="maximum">
-                <number>10000</number>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_7">
                <property name="text">
@@ -425,6 +415,16 @@
              </item>
              <item row="3" column="1">
               <widget class="QWidget" name="widget_13" native="true"/>
+             </item>
+             <item row="0" column="1">
+              <widget class="QDoubleSpinBox" name="txtThreshold">
+               <property name="suffix">
+                <string> Hz</string>
+               </property>
+               <property name="decimals">
+                <number>1</number>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
