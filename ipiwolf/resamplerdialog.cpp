@@ -6,10 +6,9 @@ ResamplerDialog::ResamplerDialog(QWidget *parent) :
     ui(new Ui::ResamplerDialog)
 {
     ui->setupUi(this);
-    //movetoThread
-    //connect(&dateThread, SIGNAL(finished() )
-
-    //dateThread.start();
+    _rs = new Resampler();
+    _rs->moveToThread(&_dateThread);
+    this->connect(_rs, &Resampler::dateChanged, this, &ResamplerDialog::changeDate);
 }
 
 ResamplerDialog::~ResamplerDialog()
@@ -20,4 +19,14 @@ ResamplerDialog::~ResamplerDialog()
 void ResamplerDialog::changeDate(QDate date)
 {
     ui->lblDate->setText(date.toString());
+}
+
+Resampler * ResamplerDialog::getResampler()
+{
+    return _rs;
+}
+
+void ResamplerDialog::startResampling()
+{
+        _dateThread.start();
 }

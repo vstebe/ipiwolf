@@ -107,7 +107,7 @@ DataFilePtr Resampler::resample()
             QDate parsedDate = QDate::fromString(listCou[0], "dd'/'MM'/'yyyy");
             if(parsedDate.isValid()) {
                 currentDate = parsedDate;
-                dateChanged(currentDate);           //send the date to resamplerdialog
+                emit dateChanged(currentDate);           //send the date to resamplerdialog
                 timeBetweenPoints = 1.f / listCou[2].toFloat();
             }
         }

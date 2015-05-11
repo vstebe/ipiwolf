@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QThread>
 #include <QDate>
+#include <resampler.h>
 
 namespace Ui {
 class ResamplerDialog;
@@ -12,16 +13,18 @@ class ResamplerDialog;
 class ResamplerDialog : public QDialog
 {
     Q_OBJECT
-    QThread dateThread;
+    QThread _dateThread;
 
 public:
     explicit ResamplerDialog(QWidget *parent = 0);
     ~ResamplerDialog();
-
+    Resampler* getResampler();
+    void startResampling();
 
 private:
     Ui::ResamplerDialog *ui;
-    QThread thread;
+    QThread _thread;
+    Resampler *_rs;
 
 public slots:
     void changeDate(QDate date);
