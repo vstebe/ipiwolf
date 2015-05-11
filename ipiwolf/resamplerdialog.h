@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QThread>
-#include <QDate>
+#include <QDateTime>
 #include <resampler.h>
 
 namespace Ui {
@@ -28,7 +28,7 @@ private:
     Resampler *_rs;
 
 public slots:
-    void changeDate(QDate date);
+    void changeDate(QDateTime date);
     void finished();
 };
 

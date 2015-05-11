@@ -1,12 +1,12 @@
 #include "resampler.h"
-#include <QDebug>
+
 /**
 * \brief Constructor of the object resampler
 */
 Resampler::Resampler()
 {
-    setStartDate(QDate::currentDate());
-    setEndDate(QDate::currentDate());
+    setStartDate(QDateTime::currentDateTime());
+    setEndDate(QDateTime::currentDateTime());
 }
 
 /**
@@ -16,8 +16,8 @@ Resampler::Resampler()
 Resampler::Resampler(QString filename)
 {
     setFile(filename);
-    setStartDate(QDate::currentDate());
-    setEndDate(QDate::currentDate());
+    setStartDate(QDateTime::currentDateTime());
+    setEndDate(QDateTime::currentDateTime());
 }
 
 
@@ -36,7 +36,7 @@ void Resampler::setFile (QString filename)
 * \brief Set the startDate
 * \param startDate the date you want to set
 */
-void Resampler::setStartDate(QDate startDate)
+void Resampler::setStartDate(QDateTime startDate)
 {
     this->_startDate = startDate;
 }
@@ -46,7 +46,7 @@ void Resampler::setStartDate(QDate startDate)
 * \brief Set the endDate
 * \param endDate the date you want to set
 */
-void Resampler::setEndDate(QDate endDate)
+void Resampler::setEndDate(QDateTime endDate)
 {
     this->_endDate = endDate;
 }
@@ -74,7 +74,7 @@ void Resampler::resample()
 
     DataFilePtr final(new DataFile());
     QTextStream in(&_file);
-    QDate currentDate;
+    QDateTime currentDate;
     QString line = in.readLine();
     QStringList listCou = line.split("\t");
     QStringList listPrec;
@@ -103,7 +103,7 @@ void Resampler::resample()
 
         if (!listCou[0].trimmed().isEmpty())       //if the date changes
         {
-            QDate parsedDate = QDate::fromString(listCou[0], "dd'/'MM'/'yyyy");
+            QDateTime parsedDate = QDateTime::fromString(listCou[0] + ":" + listCou[1], "dd'/'MM'/'yyyy:hh:mm:ss");
             if(parsedDate.isValid()) {
                 currentDate = parsedDate;
                 emit dateChanged(currentDate);           //send the date to resamplerdialog

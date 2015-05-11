@@ -1,5 +1,3 @@
-#include <QDebug>
-
 #include "resamplerdialog.h"
 #include "ui_resamplerdialog.h"
 
@@ -21,7 +19,7 @@ ResamplerDialog::~ResamplerDialog()
     delete ui;
 }
 
-void ResamplerDialog::changeDate(QDate date)
+void ResamplerDialog::changeDate(QDateTime date)
 {
     ui->lblDate->setText(date.toString());
 }
@@ -39,7 +37,6 @@ void ResamplerDialog::startResampling()
 
 
 void ResamplerDialog::finished() {
-    qDebug() << "finished";
     _dateThread.quit();
     _dateThread.wait();
     accept();
