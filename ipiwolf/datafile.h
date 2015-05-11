@@ -20,6 +20,8 @@ public:
 
     static DataFilePtr openFile(const QString& filename);
 
+    ~DataFile();
+
 protected:
     int _samplingRate;
 };

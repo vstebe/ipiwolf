@@ -21,6 +21,10 @@ void DataFile::saveInFile(QString filename) {
     }
 }
 
+DataFile::~DataFile() {
+    qDebug() << "Destruction datafile";
+}
+
 DataFilePtr DataFile::openFile(const QString& filename) {
 
     QFile file(filename);

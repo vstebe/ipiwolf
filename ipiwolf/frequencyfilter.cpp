@@ -88,52 +88,11 @@ SpectrumPtr FrequencyFilter::getSpectrum(Axe axe) {
         return getSpectrum([](DataFilePtr df, int k) { return df->at(k).z; });
     }
     else {
-        return getSpectrum([](DataFilePtr df, int k) { return sqrt(df->at(k).x*df->at(k).x + df->at(k).y*df->at(k).y + df->at(k).z*df->at(k).y); });
+        return getSpectrum([](DataFilePtr df, int k) { return sqrt(df->at(k).x*df->at(k).x + df->at(k).y*df->at(k).y + df->at(k).z*df->at(k).z); });
     }
 }
 
 void FrequencyFilter::process() {
-/*
-
-    memcpy(out2, out1, _dataFile->size()*sizeof(fftw_complex));
-
-    for (k = 0; k < _dataFile->size(); k++) {
-        magnitude[k]=sqrt(out1[k][0]*out1[k][0]+out1[k][1]*out1[k][1]);
-    }
-
-    // separate low and high frequencies
-    int start =(_threshold*_dataFile->getSamplingRate())/_dataFile->size();
-    int end = _dataFile->size() - start;
-
-    std::cout << "start : " << start << std::endl;
-    std::cout << "end : " << end << std::endl;
-    std::cout << "size : " << _dataFile->size() << std::endl;
-
-
-    for(k=start;k<end;k++) out1[k][0]=out1[k][1]= 0.0;
-    for(k=0;k<start;k++)   out2[k][0]=out2[k][1]= 0.0;
-
-
-    q = fftw_plan_dft_c2r_1d(_dataFile->size(), out1, amplitude1, FFTW_ESTIMATE);
-    fftw_execute(q);
-    q = fftw_plan_dft_c2r_1d(_dataFile->size(), out2, amplitude2, FFTW_ESTIMATE);
-    fftw_execute(q);
-
-    DataFilePtr output(new DataFile());
-    output->setSamplingRate(_dataFile->getSamplingRate());
-    for (k = 0; k < _dataFile->size(); k++) {
-        output->push_back(Point(amplitude[k],amplitude1[k]/((_dataFile->size()-1)),amplitude2[k]/((_dataFile->size()-1))));
-    }
-
-
-    fftw_destroy_plan(p);
-    fftw_destroy_plan(q);
-    free(amplitude);free(amplitude1);free(amplitude2);
-    free(magnitude);
-    fftw_free(out1);fftw_free(out2);
-
-    return output;*/
-
 
     SpectrumPtr histo = getSpectrum(_axe);
 

@@ -1,5 +1,7 @@
 #include "spectrum.h"
 #include <math.h>
+#include <QDebug>
+
 Spectrum::Spectrum(fftw_complex * tab, int size, int samplingRate) {
     _tab = tab;
     _size = size;
@@ -26,6 +28,9 @@ fftw_complex * Spectrum::getTab() {
 
 Spectrum::~Spectrum() {
     fftw_free(_tab);
+
+    qDebug() << "Destruction spectrum";
+
 }
 
 const QVector<SpectrumPoint>& Spectrum::getEasyTab() const {

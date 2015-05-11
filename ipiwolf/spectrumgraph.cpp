@@ -43,7 +43,7 @@ void SpectrumGraph::setSpectrum(MultiSpectrum mhisto) {
 
         addGraph();
 
-        graph()->setPen(QPen(Qt::blue)); // line color blue for first graph
+        graph()->setPen(QPen(Qt::red)); // line color blue for first graph
         graph()->setAntialiasedFill(false);
         graph()->setLineStyle(QCPGraph::lsStepCenter);
         graph()->setName("X");
@@ -79,7 +79,7 @@ void SpectrumGraph::setSpectrum(MultiSpectrum mhisto) {
         SpectrumPtr histo = mhisto.z;
         addGraph();
 
-        graph()->setPen(QPen(Qt::yellow)); // line color blue for first graph
+        graph()->setPen(QPen(Qt::blue)); // line color blue for first graph
         graph()->setAntialiasedFill(false);
         graph()->setLineStyle(QCPGraph::lsStepCenter);
         graph()->setName("Z");
@@ -97,7 +97,7 @@ void SpectrumGraph::setSpectrum(MultiSpectrum mhisto) {
         SpectrumPtr histo = mhisto.xyz;
         addGraph();
 
-        graph()->setPen(QPen(Qt::red)); // line color blue for first graph
+        graph()->setPen(QPen(Qt::yellow)); // line color blue for first graph
         graph()->setAntialiasedFill(false);
         graph()->setLineStyle(QCPGraph::lsStepCenter);
         graph()->setName("XYZ");

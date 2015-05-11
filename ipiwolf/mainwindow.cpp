@@ -102,8 +102,8 @@ void MainWindow::slotProcessResampling() {
 }
 
 void MainWindow::slotUpdateGraphAxes() {
-    ui->_graph->setAxes(ui->radioGraphX->isChecked(), ui->radioGraphY->isChecked(), ui->radioGraphZ->isChecked(), ui->radioGraphXYZ);
-    ui->_graph->update();
+    ui->_graph->setAxes(ui->radioGraphX->isChecked(), ui->radioGraphY->isChecked(), ui->radioGraphZ->isChecked(), ui->radioGraphXYZ->isChecked());
+    ui->_graph->replot();
 }
 
 void MainWindow::slotSaveResampledFile() {
@@ -153,8 +153,6 @@ void MainWindow::slotProcessSpectrum() {
     filter.setDatafile(_currentDataFile);
 
     MultiSpectrum histo = filter.getSpectrum(ui->radioSpectrumGraphX->isChecked(), ui->radioSpectrumGraphY->isChecked(), ui->radioSpectrumGraphZ->isChecked(), ui->radioSpectrumGraphXYZ->isChecked());
-
-    std::cout << (*(histo.y)) << std::endl;
 
     ui->_spectrumGraph->setSpectrum(histo);
 }

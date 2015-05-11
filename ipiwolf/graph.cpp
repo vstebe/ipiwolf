@@ -28,6 +28,17 @@ Graph::Graph(QWidget * parent) : QCustomPlot(parent)
 
     setNotAntialiasedElements(QCP::aeAll);
 
+    // setup legend:
+    legend->setVisible(true);
+    axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignTop|Qt::AlignHCenter);
+    legend->setBrush(QColor(255, 255, 255, 200));
+    QPen legendPen;
+    legendPen.setColor(QColor(130, 130, 130, 200));
+    legend->setBorderPen(legendPen);
+    QFont legendFont = font();
+    legendFont.setPointSize(10);
+    legend->setFont(legendFont);
+    setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 }
 
 Graph::~Graph()
@@ -64,8 +75,8 @@ void Graph::update() {
         }
         QCPGraph * graph = addGraph();
         graph->setData(x, y);
-        graph->setPen(QPen(Qt::blue)); // line color blue for first graph
-        graph->rescaleAxes();
+        graph->setPen(QPen(Qt::red)); // line color blue for first graph
+        graph->setName("X");
     }
     if(_axeY) {
 
@@ -75,8 +86,8 @@ void Graph::update() {
         }
         QCPGraph * graph = addGraph();
         graph->setData(x, y);
-        graph->setPen(QPen(Qt::red)); // line color blue for first graph
-        graph->rescaleAxes();
+        graph->setPen(QPen(Qt::green)); // line color blue for first graph
+        graph->setName("Y");
     }
     if(_axeZ) {
 
@@ -86,8 +97,8 @@ void Graph::update() {
         }
         QCPGraph * graph = addGraph();
         graph->setData(x, y);
-        graph->setPen(QPen(Qt::green)); // line color blue for first graph
-        graph->rescaleAxes();
+        graph->setPen(QPen(Qt::blue)); // line color blue for first graph
+        graph->setName("Z");
     }
 
     if(_axeXYZ) {
@@ -102,7 +113,7 @@ void Graph::update() {
         QCPGraph * graph = addGraph();
         graph->setData(x, y);
         graph->setPen(QPen(Qt::yellow)); // line color blue for first graph
-        graph->rescaleAxes();
+        graph->setName("XYZ");
     }
 
     QCustomPlot::update();
