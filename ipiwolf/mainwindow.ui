@@ -23,74 +23,6 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QWidget" name="widget" native="true">
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;IPIWolf&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="textFormat">
-          <enum>Qt::RichText</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
-     <widget class="QWidget" name="widget_9" native="true">
-      <layout class="QHBoxLayout" name="horizontalLayout_7">
-       <item>
-        <widget class="QPushButton" name="btnOpenRaw">
-         <property name="text">
-          <string>Open Raw File</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnOpenResampled">
-         <property name="text">
-          <string>Open Resampled File</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_7">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>787</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_8">
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="pixmap">
-          <pixmap resource="resources.qrc">:/images/images/wolf.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
      <widget class="QWidget" name="widget_3" native="true">
       <layout class="QHBoxLayout" name="horizontalLayout_8">
        <item>
@@ -104,45 +36,6 @@
      </widget>
     </item>
     <item>
-     <widget class="QWidget" name="widget_7" native="true">
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnSaveResampled">
-         <property name="text">
-          <string>Save resampled file</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
      <widget class="QWidget" name="mainForm" native="true">
       <property name="enabled">
        <bool>true</bool>
@@ -150,6 +43,9 @@
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QTabWidget" name="tabWidget">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -157,7 +53,7 @@
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="Resampling">
           <attribute name="title">
@@ -170,6 +66,9 @@
               <widget class="QLabel" name="label_3">
                <property name="text">
                 <string>Start</string>
+               </property>
+               <property name="buddy">
+                <cstring>txtDateStart</cstring>
                </property>
               </widget>
              </item>
@@ -191,6 +90,9 @@
              </item>
              <item row="1" column="1">
               <widget class="QSlider" name="horizontalSlider">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="minimum">
                 <number>1</number>
                </property>
@@ -208,7 +110,10 @@
              <item row="1" column="0">
               <widget class="QLabel" name="label_2">
                <property name="text">
-                <string>Frequency :</string>
+                <string>Fre&amp;quency :</string>
+               </property>
+               <property name="buddy">
+                <cstring>horizontalSlider</cstring>
                </property>
               </widget>
              </item>
@@ -216,6 +121,9 @@
               <widget class="QLabel" name="label_4">
                <property name="text">
                 <string>End</string>
+               </property>
+               <property name="buddy">
+                <cstring>txtDateEnd</cstring>
                </property>
               </widget>
              </item>
@@ -243,7 +151,11 @@
             </layout>
            </item>
            <item>
-            <widget class="QWidget" name="widget_2" native="true"/>
+            <widget class="QWidget" name="widget_2" native="true">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QWidget" name="widget_6" native="true">
@@ -316,6 +228,9 @@
               <widget class="QLabel" name="label_5">
                <property name="text">
                 <string>Threshold :</string>
+               </property>
+               <property name="buddy">
+                <cstring>txtThreshold</cstring>
                </property>
               </widget>
              </item>
@@ -576,6 +491,66 @@
     </item>
    </layout>
   </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextBesideIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="separator"/>
+   <addaction name="actionOpenRawFile"/>
+   <addaction name="actionOpenResampledFile"/>
+   <addaction name="actionSaveFile"/>
+  </widget>
+  <action name="actionOpenRawFile">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/open1.png</normaloff>:/images/open1.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open Raw File</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Raw File</string>
+   </property>
+  </action>
+  <action name="actionOpenResampledFile">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/open2.png</normaloff>:/images/open2.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open Resampled File</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Resampled File</string>
+   </property>
+  </action>
+  <action name="actionSaveFile">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save File</string>
+   </property>
+   <property name="toolTip">
+    <string>Save File</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -603,12 +578,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>208</x>
-     <y>122</y>
+     <x>186</x>
+     <y>306</y>
     </hint>
     <hint type="destinationlabel">
-     <x>402</x>
-     <y>128</y>
+     <x>265</x>
+     <y>312</y>
     </hint>
    </hints>
   </connection>
@@ -619,12 +594,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>402</x>
-     <y>128</y>
+     <x>265</x>
+     <y>312</y>
     </hint>
     <hint type="destinationlabel">
-     <x>302</x>
-     <y>122</y>
+     <x>186</x>
+     <y>306</y>
     </hint>
    </hints>
   </connection>

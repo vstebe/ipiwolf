@@ -30,6 +30,7 @@ public slots:
 
 protected:
     void updateFileInfo();
+    void setMainFormEnabled(bool enabled);
 
 private:
     Ui::MainWindow *ui;

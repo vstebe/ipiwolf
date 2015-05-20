@@ -13,16 +13,18 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->btnOpenRaw, &QPushButton::clicked, this, &MainWindow::slotOpenRaw);
-    connect(ui->btnOpenResampled, &QPushButton::clicked, this, &MainWindow::slotOpenResampled);
+    connect(ui->actionOpenRawFile, &QAction::triggered, this, &MainWindow::slotOpenRaw);
+    connect(ui->actionOpenResampledFile, &QAction::triggered, this, &MainWindow::slotOpenResampled);
     connect(ui->btnProcess, &QPushButton::clicked, this, &MainWindow::slotProcessResampling);
     connect(ui->btnFilter, &QPushButton::clicked, this, &MainWindow::slotProcessFiltering);
     connect(ui->radioGraphX, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
     connect(ui->radioGraphY, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
     connect(ui->radioGraphZ, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
     connect(ui->radioGraphXYZ, &QRadioButton::clicked, this, &MainWindow::slotUpdateGraphAxes);
-    connect(ui->btnSaveResampled, &QPushButton::clicked, this, &MainWindow::slotSaveResampledFile);
+    connect(ui->actionSaveFile, &QAction::triggered, this, &MainWindow::slotSaveResampledFile);
     connect(ui->btnProcessSpectrum, &QPushButton::clicked, this, &MainWindow::slotProcessSpectrum);
+
+    setMainFormEnabled(false);
 }
 
 MainWindow::~MainWindow()
@@ -49,13 +51,10 @@ void MainWindow::slotOpenRaw()
             _currentFileName = fileName;
             _currentFileType = RAW;
             updateFileInfo();
-            ui->mainForm->setEnabled(true);
             _currentDataFile = DataFilePtr();
             _currentSpectrum = SpectrumPtr();
 
-            QDateTime start;
-            QDateTime end;
-            Resampler::getExtremDates(_currentFileName, &start, &end);
+            setMainFormEnabled(true);
         } else {
             QMessageBox::critical(this, "Erreur", "Impossible de lire le fichier");
         }
@@ -94,6 +93,8 @@ void MainWindow::slotOpenResampled()
         }
 
         ui->_graph->setDataFile(_currentDataFile);
+
+        setMainFormEnabled(true);
     }
 }
 
@@ -187,4 +188,13 @@ void MainWindow::slotProcessSpectrum() {
 
     ui->_spectrumGraph->setSpectrum(histo);
     ui->_spectrumGraph->replot();
+}
+
+
+void MainWindow::setMainFormEnabled(bool enabled) {
+    QList<QWidget*> list = ui->mainForm->findChildren<QWidget*>() ;
+    foreach( QWidget* w, list )
+    {
+       w->setEnabled( enabled ) ;
+    }
 }

@@ -5,5 +5,8 @@
     <qresource prefix="/">
         <file>Test.qml</file>
         <file>TestForm.ui.qml</file>
+        <file>images/open1.png</file>
+        <file>images/open2.png</file>
+        <file>images/save.png</file>
     </qresource>
 </RCC>
