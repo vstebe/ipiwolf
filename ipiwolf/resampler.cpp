@@ -1,5 +1,8 @@
 #include "resampler.h"
 
+#include <QFileInfo>
+#include <QDebug>
+
 /**
 * \brief Constructor of the object resampler
 */
@@ -156,4 +159,44 @@ float Resampler::calcNewPoint(float coeffDir, float OrdOri, float time)
     return ((time*coeffDir) + OrdOri);
 }
 
+void Resampler::getExtremDates(const QString& filename, QDateTime * startDate, QDateTime * lastDate) {
+    QFile file(filename);
+    if(file.open(QIODevice::ReadOnly)) {
+        QFileInfo fi(file);
+
+        QTextStream in(&file);
+        bool found = false;
+        while(!found && !in.atEnd()) {
+            QString line = in.readLine();
+            QStringList listCou = line.split("\t");
+
+            if(listCou.size() > 1) {
+                if (!listCou[0].trimmed().isEmpty())       //if the date changes
+                {
+                    (*startDate) = QDateTime::fromString(listCou[0] + ":" + listCou[1], "dd'/'MM'/'yyyy:hh:mm:ss");
+                    if(startDate->isValid())
+                        found = true;
+                }
+            }
+        }
+        if(fi.size() <= 5000)
+            in.seek(0);
+        else
+            in.seek(fi.size()-5000);
+        while(!in.atEnd()) {
+            QString line = in.readLine();
+            QStringList listCou = line.split("\t");
+
+            if(listCou.size() > 1) {
+                if (!listCou[0].trimmed().isEmpty())       //if the date changes
+                {
+                    QDateTime tmp = QDateTime::fromString(listCou[0] + ":" + listCou[1], "dd'/'MM'/'yyyy:hh:mm:ss");
+                    if(tmp.isValid())
+                        (*lastDate) = tmp;
+                }
+            }
+        }
+    file.close();
+    }
+}
 

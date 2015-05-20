@@ -104,9 +104,48 @@
      </widget>
     </item>
     <item>
+     <widget class="QWidget" name="widget_7" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnSaveResampled">
+         <property name="text">
+          <string>Save resampled file</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
      <widget class="QWidget" name="mainForm" native="true">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
@@ -261,48 +300,12 @@
              </property>
             </spacer>
            </item>
-           <item>
-            <widget class="QWidget" name="widget_7" native="true">
-             <layout class="QHBoxLayout" name="horizontalLayout_5">
-              <item>
-               <spacer name="horizontalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QPushButton" name="btnSaveResampled">
-                <property name="text">
-                 <string>Save resampled file</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_4">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </widget>
-           </item>
           </layout>
          </widget>
          <widget class="QWidget" name="tab_2">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <attribute name="title">
            <string>Filter</string>
           </attribute>
@@ -421,6 +424,9 @@
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
            <widget class="QTabWidget" name="tabGraph">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="currentIndex">
              <number>0</number>
             </property>
@@ -492,7 +498,7 @@
               <item>
                <widget class="SpectrumGraph" name="_spectrumGraph" native="true">
                 <property name="enabled">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -527,6 +533,9 @@
                  </item>
                  <item>
                   <widget class="QCheckBox" name="radioSpectrumGraphZ">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
                    <property name="text">
                     <string>Z</string>
                    </property>

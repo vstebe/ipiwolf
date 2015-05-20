@@ -27,6 +27,8 @@ public:
     float calcNewPoint(float coeffDir, float OrdOri, float time);
     DataFilePtr getResult();
 
+    static void getExtremDates(const QString& filename, QDateTime * startDate, QDateTime * lastDate);
+
 signals:
     void dateChanged(QDateTime date);
     void finished();

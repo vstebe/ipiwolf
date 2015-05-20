@@ -35,13 +35,30 @@ void MainWindow::slotOpenRaw()
     QString fileName = QFileDialog::getOpenFileName(this, "Open File",
                                                     "",
                                                     tr("Fichiers textes (*.txt);;Tous les fichiers (*)"));
+
+
     if(!fileName.isEmpty()) {
-        _currentFileName = fileName;
-        _currentFileType = RAW;
-        updateFileInfo();
-        ui->mainForm->setEnabled(true);
-        _currentDataFile = DataFilePtr();
-        _currentSpectrum = SpectrumPtr();
+        QDateTime start;
+        QDateTime end;
+        Resampler::getExtremDates(fileName, &start, &end);
+
+        if(start.isValid() && end.isValid()) {
+            ui->txtDateStart->setDateTime(start);
+            ui->txtDateEnd->setDateTime(end);
+
+            _currentFileName = fileName;
+            _currentFileType = RAW;
+            updateFileInfo();
+            ui->mainForm->setEnabled(true);
+            _currentDataFile = DataFilePtr();
+            _currentSpectrum = SpectrumPtr();
+
+            QDateTime start;
+            QDateTime end;
+            Resampler::getExtremDates(_currentFileName, &start, &end);
+        } else {
+            QMessageBox::critical(this, "Erreur", "Impossible de lire le fichier");
+        }
     }
 }
 
