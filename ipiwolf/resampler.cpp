@@ -83,7 +83,7 @@ void Resampler::resample()
     QStringList listPrec;
     float timePb = 0.0, timeNewPoint = 0.0, timePa, timeBetweenPoints;
 
-    while (!in.atEnd())
+    while (!in.atEnd() && (!currentDate.isValid() || currentDate <= _endDate))
     {
 
         listPrec = listCou;
@@ -103,6 +103,8 @@ void Resampler::resample()
                 final->push_back(calcCoord(a, timePa, b, timePb, timeNewPoint));     //compute the new point
             }
         }
+
+
 
         if (!listCou[0].trimmed().isEmpty())       //if the date changes
         {
