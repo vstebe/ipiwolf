@@ -109,7 +109,7 @@ void Graph::update() {
         }
         QCPGraph * graph = addGraph();
         graph->setData(x, y);
-        graph->setPen(QPen(Qt::yellow)); // line color blue for first graph
+        graph->setPen(QPen(QColor(251, 186,24))); // line color blue for first graph
         graph->setName("XYZ");
     }
 
