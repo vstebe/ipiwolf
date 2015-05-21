@@ -37,6 +37,7 @@ void ResamplerDialog::startResampling()
 
 
 void ResamplerDialog::finished() {
+    _rs->stop();
     _dateThread.quit();
     _dateThread.wait();
     accept();

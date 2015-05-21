@@ -63,6 +63,10 @@ void Resampler::setFrequency (int freq)
     this->_newFrequency = freq;
 }
 
+void Resampler::stop()
+{
+    _stop = true;
+}
 
 /**
 * \brief Resample the file with the _newFrequency
@@ -82,8 +86,9 @@ void Resampler::resample()
     QStringList listCou = line.split("\t");
     QStringList listPrec;
     float timePb = 0.0, timeNewPoint = 0.0, timePa, timeBetweenPoints;
+    _stop = false;
 
-    while (!in.atEnd() && (!currentDate.isValid() || currentDate <= _endDate))
+    while (!in.atEnd() && (!currentDate.isValid() || currentDate <= _endDate) && !_stop)
     {
 
         listPrec = listCou;

@@ -26,6 +26,7 @@ public:
     float ordOri(float coeffDir, float a, float timPa);
     float calcNewPoint(float coeffDir, float OrdOri, float time);
     DataFilePtr getResult();
+    void stop();
 
     static void getExtremDates(const QString& filename, QDateTime * startDate, QDateTime * lastDate);
 
@@ -39,6 +40,7 @@ private:
     QFile _file;
     int _newFrequency;
     DataFilePtr _result;
+    bool _stop;
 
 };
 
