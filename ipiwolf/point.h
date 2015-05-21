@@ -8,9 +8,12 @@ class Point
 public:
     Point();
     Point(float x, float y, float z);
+    void setXYZ(float xyz);
+    float getXYZ();
     float x;
     float y;
     float z;
+    float xyz;
 
 
 };

@@ -105,10 +105,7 @@ void Graph::update() {
 
         QVector<double> y(_dataFile->size());
         for(int i=0; i<x.size(); i++) {
-            double px =  _dataFile->at(i).x;
-            double py =  _dataFile->at(i).y;
-            double pz =  _dataFile->at(i).z;
-            y[i] = sqrt(px*px + py*py + pz*pz);
+            y[i] = (*_dataFile)[i].getXYZ();
         }
         QCPGraph * graph = addGraph();
         graph->setData(x, y);
