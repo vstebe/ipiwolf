@@ -21,7 +21,7 @@ ResamplerDialog::~ResamplerDialog()
 
 void ResamplerDialog::changeDate(QDateTime date)
 {
-    ui->lblDate->setText(date.toString());
+    ui->lblDate->setText(date.toString(" dd/MM/yyyy : h") + "h");
 }
 
 Resampler * ResamplerDialog::getResampler()
