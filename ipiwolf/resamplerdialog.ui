@@ -95,7 +95,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="btnCancel">
         <property name="text">
          <string>Cancel</string>
         </property>
@@ -120,22 +120,5 @@
   </layout>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>ResamplerDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>170</x>
-     <y>122</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>312</x>
-     <y>2</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

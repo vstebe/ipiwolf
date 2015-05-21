@@ -29,6 +29,7 @@ private:
 
 public slots:
     void changeDate(QDateTime date);
+    void cancel();
     void finished();
 };
 
