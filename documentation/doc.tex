@@ -23,8 +23,6 @@
 
 \pagestyle{fancy}
 
-% \fancyhead[L]{\includegraphics[width=1.5cm]{logoiut.png}}
-
 \fancyfoot[L]{\textit{MetaMediaManager}}
 \fancyfoot[R]{\textit{Documentation technique}}
 \fancyfoot[C]{\textit{Page \thepage/\pageref{LastPage}}}
@@ -44,6 +42,33 @@
 \vspace{1cm}
 \restoregeometry
 \newpage
+
+\section{Présentation}
+\subsection{Le logiciel \emph{IPIWolf}}
+Le logiciel \emph{IPIWolf} permet de traiter des fichiers issus d'accéléromètres.
+Il prend en entrée des fichiers (appelés \emph{Raw File}) du format suivant :
+\begin{verbatim}
+$File has 224955801 lines.                                                                                                                            
+Logger date      Logger time     N       N prime         X       Y       Z 
+15/05/2014      08:00:01        28      1       -0.141  -1.609  1.531
+                                -0.109  -0.078  1.016
+                                -0.109  -0.078  1.016
+                                -0.094  -0.078  1
+                                -0.094  -0.078  1.016
+                                -0.094  -0.078  1
+                                -0.094  -0.078  1.031
+                                -0.094  -0.062  1.016
+(***)
+\end{verbatim}
+Le logiciel lit alors ce fichier et permet de sélectionner une partie du signal en spécifiant une date de début et une date de fin.
+Il permet ensuite de rééchantillonner ce signal avec une fréquence de votre choix, et de procéder à un filtrage de fréquence.
+
+\subsection{Configuration système}
+Le logiciel a été conçu sous GNU/Linux (distributions Ubuntu et ArchLinux).
+\paragraph{Dépendances à installer}
+\begin{itemize}
+ \item Qt SDK 
+\end{itemize}
 
 
 \end{document}
