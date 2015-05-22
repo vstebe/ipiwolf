@@ -65,11 +65,18 @@ Il permet ensuite de rééchantillonner ce signal avec une fréquence de votre c
 
 \subsection{Configuration système}
 Le logiciel a été conçu sous GNU/Linux (distributions Ubuntu et ArchLinux).
-\paragraph{Dépendances à installer}
+Il est nécessaire d'installer les dépendances suivantes :
 \begin{itemize}
- \item Qt SDK 
+ \item Qt SDK 5.4
+ \item FFTW 3
 \end{itemize}
-
+Ces librairies fonctionnent sur la plupart des systèmes.
+Pour compiler, il suffit ensuite soit d'utiliser \emph{QtCreator} soit d'ouvrir un terminal et d'executer les commandes suivantes :
+\begin{verbatim}
+ qmake
+ make
+\end{verbatim}
+L'exécutable \emph{ipiwolf} est alors généré et prêt à être utilisé.
 
 \end{document}
 
