@@ -32,7 +32,6 @@ void Point::setXYZ(float xyz) {
     this->xyz = xyz;
 }
 
-
 std::ostream& operator << (std::ostream& O, const Point& p) {
     O << "Point X=" << p.x << " Y=" << p.y << " Z=" << p.z;
     return O;
