@@ -71,20 +71,40 @@ Il est nécessaire d'installer les dépendances suivantes :
  \item FFTW 3
 \end{itemize}
 Ces librairies fonctionnent sur la plupart des systèmes.
-Pour compiler, il suffit ensuite soit d'utiliser \emph{QtCreator} soit d'ouvrir un terminal et d'executer les commandes suivantes :
+Pour compiler, il suffit ensuite soit d'utiliser \emph{QtCreator} soit d'ouvrir un terminal et d'exécuter les commandes suivantes :
 \begin{verbatim}
  qmake
  make
 \end{verbatim}
 L'exécutable \emph{ipiwolf} est alors généré et prêt à être utilisé.
-<<<<<<< HEAD
-
-
-
-\section{}
-=======
->>>>>>> a77f96e8198b2c90db56c7b7b3695499bf448cf4
-\end{document}
 
 \section{Utilisation}
 \subsection{Rééchantillonnage}
+\subsubsection{}
+
+\subsection{Filtrage de fréquence}
+Pour filtrer une signal, il faut utiliser un signal bien échantillonné.
+Vous devez donc :
+\begin{itemize}
+ \item soit ouvrir un fichier issu du capteur (\emph{Open Raw File}) et le rééchantillonner (voir la partie précédente)
+ \item soit ouvrir un fichier déjà rééchantilloné (\emph{Open Resampled File})
+\end{itemize}
+\subsubsection{Visualisation du spectre}
+Il est possible de visualiser le spectre avant de procéder au filtrage. 
+Ouvrir l'onglet \emph{Spectrum} et choisissez les axes à traiter en bas de la fenêtre
+Vous obtenez alors un graphe comme celui-ci (un seul axe traité) :
+\begin{center}
+ \includegraphics[width=17cm]{img/graphSpectrum.png}
+\end{center}
+
+\subsubsection{Filtrage du signal}
+Le filtrage se fait sur trois paramètres :
+\begin{itemize}
+ \item \emph{Threshold} : 
+\end{itemize}
+
+
+
+
+\end{document}
+

@@ -104,7 +104,7 @@ void FrequencyFilter::process() {
 
 
     for(int i=0; i<histo->getSize(); i++) {
-        if((i>start && _direction == LOW) || (i<= start && _direction == HIGH)) {
+        if((i>start && _direction == HIGH) || (i<= start && _direction == LOW)) {
             n[i][0] = histo->getTab()[i][0];
             n[i][1] = histo->getTab()[i][1];
          } else {
