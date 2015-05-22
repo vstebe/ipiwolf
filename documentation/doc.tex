@@ -100,11 +100,19 @@ Vous obtenez alors un graphe comme celui-ci (un seul axe traité) :
 \subsubsection{Filtrage du signal}
 Le filtrage se fait sur trois paramètres :
 \begin{itemize}
- \item \emph{Threshold} : 
+ \item \emph{Threshold} : correspond à la fréquence de coupure
+ \item \emph{Direction} : définit si le filtre est un passe-bas \emph{(LOW)} ou passe-haut \emph{(HIGH)}
+ \item \emph{Axes} : définit l'axe à filtrer
 \end{itemize}
-
-
-
+Par exemple, un filtrage avec les paramètres suivants :
+\begin{center}
+ \includegraphics[width=5cm]{img/filterParams.png}
+\end{center}
+On a un filtre passe-haut sur l'axe X avec une fréquence de coupure de 4Hz. On obtient, après avoir à nouveau généré le spectre :
+\begin{center}
+ \includegraphics[width=17cm]{img/filteredSpectrum.png}
+\end{center}
+Vous pouvez désormais retourner sur l'onglet \emph{signal} et visualiser le nouveau signal. Vous pouvez sauvegarder celui-ci avec le bouton \emph{Save file}.
 
 \end{document}
 

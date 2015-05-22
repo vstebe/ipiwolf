@@ -126,6 +126,8 @@ void MainWindow::slotProcessResampling() {
 
         _currentFileType = RESAMPLED;
         updateFileInfo();
+
+        ui->_graph->replot();
     }
 
 
