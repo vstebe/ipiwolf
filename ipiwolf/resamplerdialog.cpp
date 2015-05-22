@@ -11,7 +11,7 @@ ResamplerDialog::ResamplerDialog(QWidget *parent) :
     connect(_rs, &Resampler::dateChanged, this, &ResamplerDialog::changeDate);
     connect(_rs, &Resampler::finished, this, &ResamplerDialog::finished);
     connect(&_dateThread, &QThread::started, _rs, &Resampler::resample);
-
+    connect(ui->btnCancel, &QPushButton::clicked, this, &ResamplerDialog::cancel);
 }
 
 ResamplerDialog::~ResamplerDialog()
@@ -35,9 +35,11 @@ void ResamplerDialog::startResampling()
     exec();
 }
 
+void ResamplerDialog::cancel() {
+    _rs->stop();
+}
 
 void ResamplerDialog::finished() {
-    _rs->stop();
     _dateThread.quit();
     _dateThread.wait();
     accept();

@@ -88,7 +88,7 @@ SpectrumPtr FrequencyFilter::getSpectrum(Axe axe) {
         return getSpectrum([](DataFilePtr df, int k) { return df->at(k).z; });
     }
     else {
-        return getSpectrum([](DataFilePtr df, int k) { return sqrt(df->at(k).x*df->at(k).x + df->at(k).y*df->at(k).y + df->at(k).z*df->at(k).z); });
+        return getSpectrum([](DataFilePtr df, int k) { return (*df)[k].getXYZ(); });
     }
 }
 
@@ -126,6 +126,13 @@ void FrequencyFilter::process() {
     } else if(_axe == Z) {
         for(int i=0; i<_dataFile->size(); i++)
             (*_dataFile)[i].z = output[i]/_dataFile->size();
+    } else {
+        for(int i=0; i<_dataFile->size(); i++) {
+            (*_dataFile)[i].x = 0;
+            (*_dataFile)[i].y = 0;
+            (*_dataFile)[i].z = 0;
+            (*_dataFile)[i].setXYZ(output[i]/_dataFile->size());
+        }
     }
 
 

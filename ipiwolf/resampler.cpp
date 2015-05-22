@@ -65,6 +65,7 @@ void Resampler::setFrequency (int freq)
 
 void Resampler::stop()
 {
+    qDebug() << "stopped";
     _stop = true;
 }
 
@@ -90,7 +91,6 @@ void Resampler::resample()
 
     while (!in.atEnd() && (!currentDate.isValid() || currentDate <= _endDate) && !_stop)
     {
-
         listPrec = listCou;
         line = in.readLine();
         listCou = line.split("\t");

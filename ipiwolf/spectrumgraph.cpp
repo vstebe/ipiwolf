@@ -97,7 +97,7 @@ void SpectrumGraph::setSpectrum(MultiSpectrum mhisto) {
         SpectrumPtr histo = mhisto.xyz;
         addGraph();
 
-        graph()->setPen(QPen(Qt::yellow)); // line color blue for first graph
+        graph()->setPen(QPen(QColor(251, 186,24))); // line color blue for first graph
         graph()->setAntialiasedFill(false);
         graph()->setLineStyle(QCPGraph::lsStepCenter);
         graph()->setName("XYZ");
