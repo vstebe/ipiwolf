@@ -1,21 +1,13 @@
 #include "resampler.h"
-
 #include <QFileInfo>
 #include <QDebug>
 
-/**
-* \brief Constructor of the object resampler
-*/
 Resampler::Resampler()
 {
     setStartDate(QDateTime::currentDateTime());
     setEndDate(QDateTime::currentDateTime());
 }
 
-/**
-* \brief Constructor of the object resampler
-* \param filename the name of the file
-*/
 Resampler::Resampler(QString filename)
 {
     setFile(filename);
@@ -23,11 +15,6 @@ Resampler::Resampler(QString filename)
     setEndDate(QDateTime::currentDateTime());
 }
 
-
-/**
-* \brief Set the file you want to resample
-* \param filename the name of the file
-*/
 void Resampler::setFile (QString filename)
 {
     _file.setFileName(filename);
@@ -35,29 +22,16 @@ void Resampler::setFile (QString filename)
         std::cout << "Impossible d'ouvrir le fichier !" << std::endl;
 }
 
-/**
-* \brief Set the startDate
-* \param startDate the date you want to set
-*/
 void Resampler::setStartDate(QDateTime startDate)
 {
     this->_startDate = startDate;
 }
 
-
-/**
-* \brief Set the endDate
-* \param endDate the date you want to set
-*/
 void Resampler::setEndDate(QDateTime endDate)
 {
     this->_endDate = endDate;
 }
 
-/**
-* \brief Set the frequency of the sample
-* \param freq the new frequency
-*/
 void Resampler::setFrequency (int freq)
 {
     this->_newFrequency = freq;
@@ -69,10 +43,6 @@ void Resampler::stop()
     _stop = true;
 }
 
-/**
-* \brief Resample the file with the _newFrequency
-* \return a formatted Datafile of the sample, between the two dates given and at the new Frequency
-*/
 void Resampler::resample()
 {
     if(!_file.open(QIODevice::ReadOnly))
