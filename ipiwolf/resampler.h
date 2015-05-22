@@ -9,6 +9,10 @@
 #include "datafile.h"
 #include "point.h"
 
+/**
+ * @brief Class used for resampling a signal.
+ * It opens a raw file.
+ */
 class Resampler : public QObject
 {
     Q_OBJECT
