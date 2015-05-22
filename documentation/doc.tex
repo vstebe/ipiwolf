@@ -79,8 +79,29 @@ Pour compiler, il suffit ensuite soit d'utiliser \emph{QtCreator} soit d'ouvrir 
 L'exécutable \emph{ipiwolf} est alors généré et prêt à être utilisé.
 
 \section{Utilisation}
-\subsection{Rééchantillonnage}
-\subsubsection{}
+\subsection{Ré-échantillonnage}
+\subsubsection{Entrée des paramètres}
+Appuyer sur le bouton \emph{Open Raw File} pour sélectionner un fichier à ré-échantillonner.
+Choisir les différents paramètres de ré-échantionnage.
+\begin{itemize}
+ \item \textbf{Frequency} : Sélection de la fréquence de ré-échantionnage.
+ \item \textbf{Start} : Sélection de la date à partir de laquelle commencera le ré-échantionnage.
+ \item \textbf{End} : Sélection de la date à partir de laquelle finira le ré-échantionnage.
+\end{itemize}
+
+Il suffit enfin d'appuyer sur bouton \emph{process} pour lancer le calcul du ré-échantillonnage. Une fenêtre de chargement s'affichera 
+pour permettre de suivre la progression du calcul.
+
+
+\subsubsection{Visualisation des données}
+L'onglet \emph{Signal} permet de visualiser la courbe des données ré-échantionnées.
+Plusieurs boutons permetent de sélectionner les informations à afficher.
+\begin{itemize}
+  \item \textbf{X} : Affiche la courbe des déplacements sur l'axe X.
+  \item \textbf{Y} : Affiche la courbe des déplacements sur l'axe Y.
+  \item \textbf{Z} : Affiche la courbe des déplacements sur l'axe Z.
+  \item \textbf{XYZ} : Affiche la courbe de la norme de chaques points. Calcul : $\sqrt{x^2 + y^2 + z^2}$
+\end{itemize}
 
 
 \end{document}
