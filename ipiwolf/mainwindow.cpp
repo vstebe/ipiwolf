@@ -145,7 +145,6 @@ void MainWindow::slotSaveResampledFile() {
                                tr("Text (*.txt)"));
     _currentDataFile->saveInFile(filename);
 
-
 }
 
 void MainWindow::slotProcessFiltering() {

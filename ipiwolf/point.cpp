@@ -19,7 +19,6 @@ Point::Point(float x, float y, float z)
     this->z = z;
 }
 
-
 std::ostream& operator << (std::ostream& O, const Point& p) {
     O << "Point X=" << p.x << " Y=" << p.y << " Z=" << p.z;
     return O;
